@@ -209,14 +209,14 @@ import 'package:magic_social_auth/magic_social_auth.dart';
 
 void signGoogleOutOnSignOut() {
   Auth.stateNotifier.addListener(() {
-    if (!Auth.check()) {
+    if (!Auth.check() && SocialAuth.supports('google')) {
       unawaited(SocialAuth.driver('google').signOut());
     }
   });
 }
 ```
 
-Call the driver by name rather than `SocialAuth.signOut()`: the manager only signs out drivers it has cached in this process, and a session restored at boot has created none. Guard the call to `google` being enabled: `SocialAuth.driver('google')` throws `ProviderNotConfiguredException` otherwise. On the web Google runs through a `RedirectDriver`, whose `signOut()` does nothing.
+Call the driver by name rather than `SocialAuth.signOut()`: the manager only signs out drivers it has cached in this process, and a session restored at boot has created none. The `SocialAuth.supports('google')` guard keeps the listener from throwing: `SocialAuth.driver('google')` throws `ProviderNotConfiguredException` when Google is disabled, while `supports()` answers `false` for a disabled or unsupported provider. On the web Google runs through a `RedirectDriver`, whose `signOut()` does nothing.
 
 <a name="manual-setup"></a>
 ## Manual Setup

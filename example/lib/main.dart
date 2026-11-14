@@ -144,8 +144,7 @@ class _ProvidersPageState extends State<ProvidersPage> {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: ListView(
           children: [
             for (final String provider in _providers) ...[
               _row(provider),
@@ -187,20 +186,54 @@ class _ProvidersPageState extends State<ProvidersPage> {
   }
 }
 
-class _Button extends StatelessWidget {
+/// A button that works from the keyboard: Tab focuses it, Enter or Space
+/// activates it, and a ring shows where the focus is.
+class _Button extends StatefulWidget {
   const _Button({required this.label, required this.onTap});
 
   final String label;
   final VoidCallback? onTap;
 
   @override
+  State<_Button> createState() => _ButtonState();
+}
+
+class _ButtonState extends State<_Button> {
+  bool _focused = false;
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        color: onTap == null ? const Color(0xFF9CA3AF) : _accent,
-        child: Text(label, style: const TextStyle(color: Color(0xFFFFFFFF))),
+    final VoidCallback? onTap = widget.onTap;
+
+    return FocusableActionDetector(
+      enabled: onTap != null,
+      mouseCursor: onTap == null ? MouseCursor.defer : SystemMouseCursors.click,
+      onShowFocusHighlight: (bool value) => setState(() => _focused = value),
+      actions: <Type, Action<Intent>>{
+        ActivateIntent: CallbackAction<ActivateIntent>(
+          onInvoke: (ActivateIntent intent) {
+            onTap?.call();
+
+            return null;
+          },
+        ),
+      },
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: onTap == null ? const Color(0xFF9CA3AF) : _accent,
+            border: Border.all(
+              color: _focused ? _ink : const Color(0x00000000),
+              width: 2,
+            ),
+          ),
+          child: Text(
+            widget.label,
+            style: const TextStyle(color: Color(0xFFFFFFFF)),
+          ),
+        ),
       ),
     );
   }

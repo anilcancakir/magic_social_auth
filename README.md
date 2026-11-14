@@ -220,14 +220,14 @@ import 'package:magic_social_auth/magic_social_auth.dart';
 
 void signGoogleOutOnSignOut() {
   Auth.stateNotifier.addListener(() {
-    if (!Auth.check()) {
+    if (!Auth.check() && SocialAuth.supports('google')) {
       unawaited(SocialAuth.driver('google').signOut());
     }
   });
 }
 ```
 
-Guard it to Google being enabled. The starter bridge does this for starter apps.
+`SocialAuth.supports('google')` is `false` when Google is disabled, so the lookup never throws. The starter bridge does the same for starter apps.
 
 ## For AI coding agents
 

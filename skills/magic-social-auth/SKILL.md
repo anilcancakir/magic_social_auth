@@ -154,7 +154,7 @@ import 'package:magic_social_auth/magic_social_auth.dart';
 
 void signGoogleOutOnSignOut() {
   Auth.stateNotifier.addListener(() {
-    if (!Auth.check()) {
+    if (!Auth.check() && SocialAuth.supports('google')) {
       unawaited(SocialAuth.driver('google').signOut());
     }
   });
