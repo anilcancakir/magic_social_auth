@@ -150,4 +150,4 @@ This package does not depend on `magic_starter`, and `magic_starter` does not de
 - [Configuration](../getting-started/configuration.md): the `social_auth` config keys.
 - [Drivers](../basics/drivers.md): the driver contract and the platform matrix.
 - [Flows](../basics/flows.md): the browser and native token flows, errors and guarantees.
-- [Connected accounts in magic_starter](https://anilcancakir.com/magic_starter/docs/basics/connected-accounts): the starter screens the bridge feeds.
+- [Connected accounts in magic_starter](https://anilcancakir.com/magic/docs/starter/basics/connected-accounts): the starter screens the bridge feeds.

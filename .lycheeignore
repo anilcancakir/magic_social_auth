@@ -12,12 +12,16 @@
 ^https://github\.com/anilcancakir/magic_social_auth/security/advisories/new
 
 # The package pages are published with the docs site; until then they answer 404.
-# Added 2026-11-13: remove this line once the docs site serves /magic_social_auth.
-^https://anilcancakir\.com/magic_social_auth(?:[/?#]|$)
+# Added 2026-11-15: remove these lines once the docs site serves /magic/social_auth
+# and /magic/docs/social_auth.
+^https://anilcancakir\.com/magic/social_auth(?:[/?#]|$)
+^https://anilcancakir\.com/magic/docs/social_auth(?:[/?#]|$)
 
 # The starter pages are published with the docs site; until then they answer 404.
-# Added 2026-11-14: remove this line once the docs site serves /magic_starter.
-^https://anilcancakir\.com/magic_starter(?:[/?#]|$)
+# Added 2026-11-15: remove these lines once the docs site serves /magic/starter
+# and /magic/docs/starter.
+^https://anilcancakir\.com/magic/starter(?:[/?#]|$)
+^https://anilcancakir\.com/magic/docs/starter(?:[/?#]|$)
 
 # Placeholder hosts inside example code.
 ^https?://([a-z0-9-]+\.)*example\.com

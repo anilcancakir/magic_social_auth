@@ -260,4 +260,4 @@ Then run `social:doctor` and sign in once per provider on a device.
 - [Drivers](../basics/drivers.md): the driver contract and the platform matrix.
 - [Flows](../basics/flows.md): the browser and native token flows, errors and guarantees.
 - [Architecture overview](../architecture/overview.md): how the manager, drivers and flow client fit together.
-- [Connected accounts in magic_starter](https://anilcancakir.com/magic_starter/docs/basics/connected-accounts): the starter screens the bridge feeds.
+- [Connected accounts in magic_starter](https://anilcancakir.com/magic/docs/starter/basics/connected-accounts): the starter screens the bridge feeds.

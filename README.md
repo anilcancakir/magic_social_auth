@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <a href="https://anilcancakir.com/magic_social_auth">Documentation</a> ·
+  <a href="https://anilcancakir.com/magic/docs/social_auth">Documentation</a> ·
   <a href="https://pub.dev/packages/magic_social_auth">pub.dev</a> ·
   <a href="https://github.com/anilcancakir/magic_social_auth/issues">Issues</a>
 </p>
@@ -256,7 +256,7 @@ Rules for an agent writing code against this package. Each one is a mistake that
 
 ## Links
 
-- [Documentation](https://anilcancakir.com/magic_social_auth/docs/getting-started/installation): installation, configuration, drivers, flows and the architecture
+- [Documentation](https://anilcancakir.com/magic/docs/social_auth/getting-started/installation): installation, configuration, drivers, flows and the architecture
 - [API reference](https://pub.dev/documentation/magic_social_auth/latest/)
 - [llms.txt](llms.txt) and the [agent skill](skills/magic-social-auth/SKILL.md) for AI coding agents: `npx skills add anilcancakir/magic_social_auth`
 - [Changelog](CHANGELOG.md)

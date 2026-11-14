@@ -116,7 +116,7 @@ Future<SocialAuthResult> continueOnWeb(
 
 The backend answers 422 `step_up_required` with `accepts` naming the proofs this account can send when no live proof came along. Every connect mints a new PKCE pair, a new link ticket and a new proof; nothing is cached across attempts. A link ticket is single use and expires after the backend's `link_ticket_ttl` (300 seconds by default).
 
-This package has no disconnect. Unlinking a provider (`DELETE user/social-accounts/{provider}`) and setting a first password (`POST user/password/set`) are backend calls that `magic_starter`'s own screens make, see [connected accounts](https://anilcancakir.com/magic_starter/docs/basics/connected-accounts) and [set password](https://anilcancakir.com/magic_starter/docs/basics/set-password). The backend refuses to remove the last sign-in method of a password-less account (`last_login_method`).
+This package has no disconnect. Unlinking a provider (`DELETE user/social-accounts/{provider}`) and setting a first password (`POST user/password/set`) are backend calls that `magic_starter`'s own screens make, see [connected accounts](https://anilcancakir.com/magic/docs/starter/basics/connected-accounts) and [set password](https://anilcancakir.com/magic/docs/starter/basics/set-password). The backend refuses to remove the last sign-in method of a password-less account (`last_login_method`).
 
 <a name="confirming-an-identity"></a>
 ## Confirming an Identity
@@ -208,4 +208,4 @@ Switch on `code`, never on `message`. The codes the backend sends:
 - [Configuration](../getting-started/configuration.md): the callback keys the browser flow returns to.
 - [Installation](../getting-started/installation.md): `social:install`, `social:doctor` and the backend values.
 - [Architecture overview](../architecture/overview.md): how the flow client fits with the drivers.
-- [Connected accounts in magic_starter](https://anilcancakir.com/magic_starter/docs/basics/connected-accounts): the screens that link and unlink providers.
+- [Connected accounts in magic_starter](https://anilcancakir.com/magic/docs/starter/basics/connected-accounts): the screens that link and unlink providers.

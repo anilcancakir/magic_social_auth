@@ -10,7 +10,8 @@
 
 ### Changed
 
-- **The pub.dev listing leads with the job and points at the new home.** A new description, the homepage `https://anilcancakir.com/magic_social_auth`, and the repository and issue tracker under `anilcancakir`; the `documentation` key is gone. (`pubspec.yaml`)
+- **The package page and every documentation link name the new location under `https://anilcancakir.com/magic/social_auth`.** The pub.dev page carries it from the next release. (`pubspec.yaml`, `README.md`, `llms.txt`, `doc/`)
+- **The pub.dev listing leads with the job and points at the new home.** A new description, the homepage `https://anilcancakir.com/magic/social_auth`, and the repository and issue tracker under `anilcancakir`; the `documentation` key is gone. (`pubspec.yaml`)
 - **The README and the `doc/` pages are rewritten.** The package has no disconnect method; unlinking a provider is the backend's `DELETE user/social-accounts/{provider}`.
 
 ## [1.0.0] - 2026-11-14

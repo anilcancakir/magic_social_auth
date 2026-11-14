@@ -80,11 +80,11 @@ Future<void> signInWith(String provider) async {
 
 ## Docs
 
-- [Installation](https://anilcancakir.com/magic_social_auth/docs/getting-started/installation.md): social sign-in for Flutter apps built on the Magic Framework, against the `magic-starter-laravel` backend, with the `social:install` flags, `social:doctor`, the backend environment, provider consoles and platform notes.
-- [Configuration](https://anilcancakir.com/magic_social_auth/docs/getting-started/configuration.md): the `social_auth` config decides which providers are on, which Google client ids the native SDK uses, and where the browser flow returns to on each platform.
-- [Drivers](https://anilcancakir.com/magic_social_auth/docs/basics/drivers.md): a driver runs one provider's flow and answers what the backend concluded, as a `SocialAuthResult`; the contract, built-in drivers, platform matrix and custom drivers.
-- [Flows](https://anilcancakir.com/magic_social_auth/docs/basics/flows.md): every provider ends at a Sanctum token or a two-factor challenge handed to the caller; the native token flow, browser flow, connect, confirm, account deletion, errors and guarantees.
-- [Architecture overview](https://anilcancakir.com/magic_social_auth/docs/architecture/overview.md): the client half of `magic-starter-laravel`'s social login, with the manager, drivers, flow client and the `magic_starter` bridge.
+- [Installation](https://anilcancakir.com/magic/docs/social_auth/getting-started/installation.md): social sign-in for Flutter apps built on the Magic Framework, against the `magic-starter-laravel` backend, with the `social:install` flags, `social:doctor`, the backend environment, provider consoles and platform notes.
+- [Configuration](https://anilcancakir.com/magic/docs/social_auth/getting-started/configuration.md): the `social_auth` config decides which providers are on, which Google client ids the native SDK uses, and where the browser flow returns to on each platform.
+- [Drivers](https://anilcancakir.com/magic/docs/social_auth/basics/drivers.md): a driver runs one provider's flow and answers what the backend concluded, as a `SocialAuthResult`; the contract, built-in drivers, platform matrix and custom drivers.
+- [Flows](https://anilcancakir.com/magic/docs/social_auth/basics/flows.md): every provider ends at a Sanctum token or a two-factor challenge handed to the caller; the native token flow, browser flow, connect, confirm, account deletion, errors and guarantees.
+- [Architecture overview](https://anilcancakir.com/magic/docs/social_auth/architecture/overview.md): the client half of `magic-starter-laravel`'s social login, with the manager, drivers, flow client and the `magic_starter` bridge.
 
 ## Links
 
