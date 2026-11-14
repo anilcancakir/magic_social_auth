@@ -246,11 +246,14 @@ String snapshot(Directory root) {
       .toString();
 }
 
-/// The member names magic_starter's `MagicStarterSocialAuth` contract declares.
+/// The member names of magic_starter's `MagicStarterSocialAuth` contract, as of
+/// the magic_starter release this package was verified against.
 ///
 /// The contract lives in magic_starter and this package must not depend on it,
-/// so the bridge stub is checked against this list instead of a sibling
-/// checkout. magic_starter's own tests hold the contract side of the pair.
+/// so the bridge stub is checked against this copy instead of a sibling
+/// checkout. The copy cannot notice a change upstream: a member added to the
+/// contract in magic_starter must be added to this list and to the bridge stub.
+/// magic_starter's own tests hold the contract side of the pair.
 const List<String> _contractMembers = <String>[
   'providers',
   'label',
@@ -666,25 +669,23 @@ void main() {
         tempDir.deleteSync(recursive: true);
       });
 
-      test(
-        'overrides every member of the MagicStarterSocialAuth contract',
-        () async {
-          seedSocialProject(tempDir);
-          expect((await runInstall(tempDir, fullInstallFlags)).exitCode, 0);
-          final String bridge = read(
-            tempDir,
-            'lib/app/providers/social_auth_starter_service_provider.dart',
-          );
+      test('overrides every member of _contractMembers, the MagicStarterSocialAuth '
+          'contract as of the verified magic_starter release', () async {
+        seedSocialProject(tempDir);
+        expect((await runInstall(tempDir, fullInstallFlags)).exitCode, 0);
+        final String bridge = read(
+          tempDir,
+          'lib/app/providers/social_auth_starter_service_provider.dart',
+        );
 
-          for (final String member in _contractMembers) {
-            expect(
-              bridge,
-              contains(RegExp('@override\\s+[^@{;]*?\\b$member\\(')),
-              reason: '$member has no @override in the bridge',
-            );
-          }
-        },
-      );
+        for (final String member in _contractMembers) {
+          expect(
+            bridge,
+            contains(RegExp('@override\\s+[^@{;]*?\\b$member\\(')),
+            reason: '$member has no @override in the bridge',
+          );
+        }
+      });
     });
   });
 }

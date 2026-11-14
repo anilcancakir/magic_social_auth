@@ -60,7 +60,7 @@ Future<void> signInWith(String provider) async {
 ## Platforms
 
 - Google: native SDK on iOS and Android, browser flow on web. Apple: native sheet on iOS, browser flow on Android and web. GitHub and Microsoft: browser flow everywhere.
-- iOS returns through a custom scheme (an https callback needs iOS 17.4). Android returns through an https App Link on a dedicated host that no other App Link filter in the app claims. The web uses a popup and `web/auth.html`, and must not be served with `Cross-Origin-Opener-Policy: same-origin`.
+- iOS returns through a custom scheme (an https callback needs iOS 17.4). Android returns through an https App Link on a dedicated host that no other App Link filter in the app claims. The web uses a popup and `web/auth.html`, and `auth.html` should be served without a `Cross-Origin-Opener-Policy` header: a same-origin one can sever `window.opener`, and the page then falls back to `localStorage`.
 - macOS, Windows and Linux are not supported: `SocialAuth.supports(name)` answers `false`, `SocialAuthButtons` renders nothing for the provider, and a browser-flow driver called anyway throws `UnsupportedPlatformException`.
 
 ## Rules for agents

@@ -189,7 +189,7 @@ Client secrets and Apple's key live in the backend's environment, never in the F
 
 - Every provider uses the browser flow in a popup. `web/auth.html` receives the callback inside the popup and posts it back to the app.
 - The popup must open from the tap itself: call `SocialAuth.driver(name).signIn()` straight from the tap handler, with no `await` before it. `SocialAuthButtons` calls `onPressed` synchronously for this reason.
-- Do not serve the app shell or `auth.html` with `Cross-Origin-Opener-Policy: same-origin`. It severs the popup's link to the app (`window.opener`), which is how the result gets back.
+- Serve `auth.html` without a `Cross-Origin-Opener-Policy` header. A same-origin one can sever the popup's link to the app (`window.opener`); `auth.html` then falls back to writing the result to `localStorage`, which `flutter_web_auth_2` polls.
 - A new click supersedes a popup that is still pending; only the newest flow spends its code.
 
 ### macOS, Windows, Linux

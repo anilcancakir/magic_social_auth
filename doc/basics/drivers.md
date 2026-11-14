@@ -22,7 +22,7 @@ Future<void> useDriver(String currentPassword) async {
   final SocialDriver driver = SocialAuth.driver('github');
 
   // Sign in
-  final SocialAuthResult result = await driver.signIn();
+  await driver.signIn();
 
   // Connect (mobile)
   await driver.connect({'password': currentPassword});
@@ -32,7 +32,7 @@ Future<void> useDriver(String currentPassword) async {
     'password': currentPassword,
   });
   // ...in the next tap handler:
-  final SocialAuthResult linked = await open();
+  await open();
 }
 ```
 

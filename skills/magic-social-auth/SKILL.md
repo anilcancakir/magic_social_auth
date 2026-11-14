@@ -49,13 +49,13 @@ Requires Dart >=3.13, Flutter >=3.47, `magic` ^1.0.0 and a backend with the `soc
 
 ## Config and native rules
 
-1. The app config carries only `enabled`, `google.ios_client_id`, `google.server_client_id` and `callback.ios` and `callback.android`. Client secrets, scopes, tenants and the Apple key are the backend's. The browser flow starts at `<network.drivers.api.base_url>/auth/social/{provider}/redirect`, so that key must be the backend's API base.
+1. The app config carries only `enabled`, `google.ios_client_id`, `google.server_client_id` and `callback.ios` and `callback.android`, plus the `SocialAuthButtons` overrides per provider: `label`, `icon_svg`, `icon_class` and `order`. Client secrets, scopes, tenants and the Apple key are the backend's. The browser flow starts at `<network.drivers.api.base_url>/auth/social/{provider}/redirect`, so that key must be the backend's API base.
 2. `callback.ios` and `callback.android` must equal the backend's `MAGIC_STARTER_SOCIAL_IOS_REDIRECT` and `MAGIC_STARTER_SOCIAL_ANDROID_REDIRECT`: the backend takes the redirect target only from its own config. There is no web key; the web lands on the app's own `auth.html`.
 3. `callback.ios` is a custom scheme URL (`myapp://auth/social`), because an https callback needs iOS 17.4. `callback.android` is an https App Link on a dedicated host that no other App Link filter in the app claims, or Android may open the wrong activity; the host serves `/.well-known/assetlinks.json`.
 4. An empty callback that a flow needs throws a `SocialAuthException` naming the key. GitHub and Microsoft need both mobile callbacks, Apple needs the Android one, Google and the web need none.
 5. Google without `server_client_id` returns no ID token; the driver throws `sdk_error` and logs the key. The key is the ID token's audience, so it is also in the backend's `MAGIC_STARTER_SOCIAL_GOOGLE_AUDIENCES`.
 6. A custom driver sends no nonce for Google. For Apple it sends `Nonce.hashed` to Apple and `Nonce.raw` to the backend, one `Nonce` per sheet.
-7. Do not serve the app shell or `auth.html` with `Cross-Origin-Opener-Policy: same-origin`: it severs the popup's link back to the app.
+7. Serve `auth.html` without a `Cross-Origin-Opener-Policy` header. A same-origin one can sever `window.opener`; the page then falls back to writing the result to `localStorage`, which the web flow reads.
 8. Run `social:doctor` after any native or config change. Its checks are textual: keep provider entries and `callback` in `lib/config/social_auth.dart` flat maps of string and bool literals.
 
 ## Buttons and sign-out rules

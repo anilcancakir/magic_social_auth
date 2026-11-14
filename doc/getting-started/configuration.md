@@ -91,7 +91,7 @@ Read by `SocialAuthButtons` from each provider's entry. When omitted, the widget
 |:----|:-----|:------------|
 | `label` | `String` | Name shown on the button (`Google` becomes `Sign in with Google` through `auth.sign_in_with`). |
 | `icon_svg` | `String` | Raw SVG string for the icon. Overrides the built-in one. |
-| `icon_class` | `String` | Class applied to the icon element. Defaults to `w-5 h-5`. |
+| `icon_class` | `String` | Class applied to the icon element. Defaults to `w-5 h-5`; a value you set replaces that default instead of adding to it, so repeat the size classes you still want. |
 | `order` | `int` | Rendering order, lower first. Built-in order is Google 1, Microsoft 2, GitHub 3, Apple 4. On iOS Apple is always first, as Apple's review guidelines expect. |
 
 > [!TIP]
@@ -108,7 +108,7 @@ Read by `SocialAuthButtons` from each provider's entry. When omitted, the widget
 <a name="minimal-example"></a>
 ## Minimal Example
 
-Google and GitHub only, no Apple:
+Google and GitHub only, no Apple. On a project with an `ios/` folder, `social:doctor` reports Apple as disabled against App Store guideline 4.8 and exits with code 1; the example is valid config, but an iOS app that ships it should enable Apple too.
 
 ```dart
 Map<String, dynamic> get socialAuthConfig => {

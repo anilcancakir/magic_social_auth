@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### Added
+
+- **An `llms.txt` for coding agents.** One file at the repository root describes the public API, the flows and the platform rules.
+- **A `magic-social-auth` agent skill.** Install it with `npx skills add anilcancakir/magic_social_auth`.
+- **A runnable `example/` app.** It lists each provider with the driver it resolves to and a sign-in button.
+
+### Changed
+
+- **The pub.dev listing leads with the job and points at the new home.** A new description, the homepage `https://anilcancakir.com/magic_social_auth`, and the repository and issue tracker under `anilcancakir`; the `documentation` key is gone. (`pubspec.yaml`)
+- **The README and the `doc/` pages are rewritten.** The package has no disconnect method; unlinking a provider is the backend's `DELETE user/social-accounts/{provider}`.
+
 ## [1.0.0] - 2026-11-14
 
 ### Changed
@@ -10,7 +21,6 @@
 - **BREAKING: the CLI moved from `fluttersdk_artisan` to `dowel`.** `MagicSocialAuthArtisanProvider` is now `MagicSocialAuthDowelProvider` (file `social_auth_dowel_provider.dart`), still exported from `package:magic_social_auth/cli.dart`. Re-run `dart run magic:dowel plugin:install magic_social_auth` to register it under `.dowel/`. (`lib/cli.dart`, `lib/src/cli/`, `install.yaml`, `pubspec.yaml`)
 - **The SDK floor is Dart `^3.13.0` and Flutter `>=3.47.0`.** Inherited from `magic` 1.0.0. The widget test imports `material_ui`, so it is a dev dependency. (`pubspec.yaml`, `test/ui/social_auth_buttons_test.dart`)
 - **Direct dependencies move to their latest releases.** `crypto` `^3.0.7` to `^3.0.8` and `dowel` `^1.0.0`. (`pubspec.yaml`)
-- **The pub.dev listing leads with the job and points at the new home.** A new description, the homepage `https://anilcancakir.com/magic_social_auth`, and the repository and issue tracker under `anilcancakir`; the `documentation` key is gone. (`pubspec.yaml`)
 
 ## [0.0.11] - 2026-10-14
 

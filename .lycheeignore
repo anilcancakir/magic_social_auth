@@ -15,6 +15,10 @@
 # Added 2026-11-13: remove this line once the docs site serves /magic_social_auth.
 ^https://anilcancakir\.com/magic_social_auth(?:[/?#]|$)
 
+# The starter pages are published with the docs site; until then they answer 404.
+# Added 2026-11-14: remove this line once the docs site serves /magic_starter.
+^https://anilcancakir\.com/magic_starter(?:[/?#]|$)
+
 # Placeholder hosts inside example code.
 ^https?://([a-z0-9-]+\.)*example\.com
 ^https?://localhost
