@@ -27,10 +27,6 @@
 
 ---
 
-> **Alpha**: `magic_social_auth` is under active development. APIs may change between minor versions until `1.0.0`.
-
----
-
 ## Why Magic Social Auth?
 
 Adding social login to a Flutter app means juggling platform SDKs, OAuth redirects, nonce and PKCE rules, native project edits on three platforms, and a backend that has to agree on every value. Every project reinvents the same boilerplate.
@@ -63,7 +59,7 @@ Adding social login to a Flutter app means juggling platform SDKs, OAuth redirec
 
 ```yaml
 dependencies:
-  magic_social_auth: ^0.1.0
+  magic_social_auth: ^1.0.0
 ```
 
 Requires Dart `^3.13.0` and Flutter `>=3.47.0`.

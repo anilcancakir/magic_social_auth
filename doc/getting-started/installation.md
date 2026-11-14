@@ -24,11 +24,11 @@ Social sign-in for Flutter apps built on the Magic Framework, against the `magic
 |---|---|
 | Dart SDK | `^3.13.0` |
 | Flutter | `>=3.47.0` |
-| magic | `^0.1.0` |
-| dowel | `^0.0.21` |
+| magic | `^1.0.0` |
+| dowel | `^1.0.0` |
 | Backend | `magic-starter-laravel` with the `social-login` feature on |
 
-The Dart and Flutter floors are inherited from `magic` 0.1.0. The package depends on `google_sign_in ^7.2.0`, `sign_in_with_apple ^8.2.0`, `flutter_web_auth_2 ^5.1.0` and `crypto ^3.0.7`.
+The Dart and Flutter floors are inherited from `magic` 1.0.0. The package depends on `google_sign_in ^7.2.0`, `sign_in_with_apple ^8.2.0`, `flutter_web_auth_2 ^5.1.0` and `crypto ^3.0.7`.
 
 The backend side (routes, provider keys, the error codes) is documented in magic-starter-laravel's `doc/basics/social-login.md` and `doc/basics/account-deletion.md`; this package is its client and the two must agree on every value listed under [Backend Environment](#backend-environment).
 
@@ -40,7 +40,7 @@ Add `magic_social_auth` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  magic_social_auth: ^0.1.0
+  magic_social_auth: ^1.0.0
 ```
 
 Fetch dependencies, then register the package's dowel commands (`social:install`, `social:doctor`):

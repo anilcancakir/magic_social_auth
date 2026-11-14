@@ -177,7 +177,7 @@ name: test_app
 dependencies:
   flutter:
     sdk: flutter
-${withStarter ? '  magic_starter: ^0.0.38\n' : ''}''');
+${withStarter ? '  magic_starter: ^1.0.0\n' : ''}''');
 
   _write(root, 'lib/config/app.dart', '''
 import 'package:magic/magic.dart';
