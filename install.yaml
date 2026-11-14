@@ -26,9 +26,10 @@ post_install:
   message: |
     magic_social_auth installed. Next:
 
-    1. Fill in lib/config/social_auth.dart wherever a value is still empty
-       (the Google client ids, the iOS and Android callbacks). Re-running
-       social:install with the flags writes them for you.
+    1. Write lib/config/social_auth.dart with the flags of social:install
+       (--google-ios-client-id, --google-server-client-id, --ios-scheme and
+       --android-callback). Run it again whenever a value is still empty; a
+       file you edited by hand needs --force.
 
     2. Check the native setup and print the values the backend needs:
 
