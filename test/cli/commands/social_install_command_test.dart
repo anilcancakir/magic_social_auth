@@ -246,42 +246,20 @@ String snapshot(Directory root) {
       .toString();
 }
 
-/// The member names the starter's `MagicStarterSocialAuth` contract declares.
+/// The member names magic_starter's `MagicStarterSocialAuth` contract declares.
 ///
-/// The contract lives in magic_starter; this package must not depend on it, so
-/// the file is read from a checkout instead. Null when none is found.
-String? _contractSource() {
-  const List<String> candidates = <String>[
-    '/Users/anilcan/Code/fluttersdk/.worktrees/magic_starter-social-client/'
-        'lib/src/contracts/magic_starter_social_auth.dart',
-    '../magic_starter/lib/src/contracts/magic_starter_social_auth.dart',
-  ];
-
-  for (final String path in candidates) {
-    final File file = File(path);
-    if (file.existsSync()) return file.readAsStringSync();
-  }
-
-  return null;
-}
-
-List<String> _contractMembers(String source) {
-  final String body = RegExp(
-    r'abstract class MagicStarterSocialAuth \{(.*?)\n\}',
-    dotAll: true,
-  ).firstMatch(source)!.group(1)!;
-  final String withoutDocs = body.replaceAll(
-    RegExp(r'^\s*///.*$', multiLine: true),
-    '',
-  );
-
-  return <String>[
-    for (final String declaration in withoutDocs.split(';'))
-      if (RegExp(r'\b(\w+)\([^()]*\)\s*$').firstMatch(declaration.trim())
-          case final RegExpMatch match?)
-        match.group(1)!,
-  ];
-}
+/// The contract lives in magic_starter and this package must not depend on it,
+/// so the bridge stub is checked against this list instead of a sibling
+/// checkout. magic_starter's own tests hold the contract side of the pair.
+const List<String> _contractMembers = <String>[
+  'providers',
+  'label',
+  'icon',
+  'signIn',
+  'beginConnect',
+  'confirm',
+  'signOut',
+];
 
 void main() {
   group('SocialInstallCommand', () {
@@ -688,8 +666,6 @@ void main() {
         tempDir.deleteSync(recursive: true);
       });
 
-      final String? contract = _contractSource();
-
       test(
         'overrides every member of the MagicStarterSocialAuth contract',
         () async {
@@ -700,21 +676,7 @@ void main() {
             'lib/app/providers/social_auth_starter_service_provider.dart',
           );
 
-          final List<String> members = _contractMembers(contract!);
-
-          expect(
-            members,
-            containsAll(<String>[
-              'providers',
-              'label',
-              'icon',
-              'signIn',
-              'beginConnect',
-              'confirm',
-              'signOut',
-            ]),
-          );
-          for (final String member in members) {
+          for (final String member in _contractMembers) {
             expect(
               bridge,
               contains(RegExp('@override\\s+[^@{;]*?\\b$member\\(')),
@@ -722,7 +684,6 @@ void main() {
             );
           }
         },
-        skip: contract == null ? 'no magic_starter checkout found' : false,
       );
     });
   });

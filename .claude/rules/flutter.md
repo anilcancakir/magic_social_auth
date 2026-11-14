@@ -5,7 +5,7 @@ paths:
 
 # Flutter / Dart Stack
 
-- Dart ^3.12.0, Flutter >=3.44.0: use modern patterns (records, switch expressions, null-aware map elements, strict null safety); `dart format` uses the tall style
+- Dart ^3.13.0, Flutter >=3.47.0: use modern patterns (records, switch expressions, null-aware map elements, strict null safety); `dart format` uses the tall style
 - Import order: dart/flutter stdlib, then third-party packages, then `package:magic/magic.dart`, then `package:magic_social_auth/...`, then relative imports
 - Naming: `{Concept}Manager` (singleton), `{Concept}Driver` (strategy impl), `{Concept}ServiceProvider` (bootstrap), `{Concept}Exception`
 - Singleton pattern: `static final _instance = Class._internal(); factory Class() => _instance;`
