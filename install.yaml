@@ -27,10 +27,13 @@ post_install:
     magic_social_auth installed. Next:
 
     1. Write lib/config/social_auth.dart with the flags of social:install
-       (--google-ios-client-id, --google-server-client-id, --ios-scheme and
-       --android-callback). The file is written from the flags of that one
-       run, and an omitted flag becomes an empty value, so give every flag
-       each time; a file you edited by hand needs --force.
+       (--providers, --google-ios-client-id, --google-server-client-id,
+       --ios-scheme and --android-callback). The file is written from the
+       flags of that one run, an omitted flag becomes an empty value and an
+       omitted --providers enables all four providers, so repeat every flag
+       you want kept each time. A file you edited by hand needs --force, which
+       rewrites it from the template: note edits such as a provider label or
+       icon_svg first and restore them afterwards.
 
     2. Check the native setup and print the values the backend needs:
 
