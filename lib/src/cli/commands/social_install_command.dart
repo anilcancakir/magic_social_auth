@@ -195,7 +195,7 @@ class SocialInstallCommand extends DowelInstallCommand {
 
     final int exitCode = _renderResult(ctx, result);
     final String? message = manifest.postInstall.message;
-    if (result is Success && message != null) ctx.output.info(message);
+    if (result is InstallSuccess && message != null) ctx.output.info(message);
 
     return exitCode;
   }
@@ -208,26 +208,26 @@ class SocialInstallCommand extends DowelInstallCommand {
   /// @return 0 on [Success] or [DryRun]; 1 on [Conflict] or [Error].
   int _renderResult(DowelContext ctx, TransactionResult result) {
     return switch (result) {
-      Success(:final opCount) => () {
+      InstallSuccess(:final opCount) => () {
         ctx.output.success(
           'magic_social_auth installed ($opCount op${opCount == 1 ? '' : 's'}).',
         );
         return 0;
       }(),
-      DryRun(:final opCount) => () {
+      InstallDryRun(:final opCount) => () {
         ctx.output.info(
           '[dry-run] $opCount op${opCount == 1 ? '' : 's'} staged; no files written.',
         );
         return 0;
       }(),
-      Conflict(:final conflicts) => () {
+      InstallConflict(:final conflicts) => () {
         final paths = conflicts.map((c) => c.absPath).join(', ');
         ctx.output.error(
           'Conflict on $paths. Re-run with --force to overwrite.',
         );
         return 1;
       }(),
-      Error(:final error) => () {
+      InstallError(:final error) => () {
         ctx.output.error('Install failed: $error');
         return 1;
       }(),
