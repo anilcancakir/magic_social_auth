@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-15
+
 ### Added
 
 - **An `llms.txt` for coding agents.** One file at the repository root describes the public API, the flows and the platform rules.
