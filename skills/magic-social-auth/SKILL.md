@@ -1,7 +1,7 @@
 ---
 name: magic-social-auth
 description: "Add social sign-in to a Magic app: Google, Apple, GitHub and Microsoft through native sheets or a PKCE browser flow, with social:install and social:doctor."
-version: 1.0.0
+version: 1.0.1
 when_to_use: "Use when code imports package:magic_social_auth or touches SocialAuth, SocialAuthResult, SocialAuthButtons, the social_auth config or social:install."
 ---
 

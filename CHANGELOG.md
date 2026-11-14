@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Changed
+
+- **The package page is `https://anilcancakir.com/magic/social_auth` and every documentation link sits under `https://anilcancakir.com/magic/docs/social_auth`.** The pub.dev page carries it from the next release. (`pubspec.yaml`, `README.md`, `llms.txt`, `doc/`)
+
+## [1.0.1] - 2026-11-15
+
 ### Added
 
 - **An `llms.txt` for coding agents.** One file at the repository root describes the public API, the flows and the platform rules.
@@ -10,7 +16,6 @@
 
 ### Changed
 
-- **The package page and every documentation link name the new location under `https://anilcancakir.com/magic/social_auth`.** The pub.dev page carries it from the next release. (`pubspec.yaml`, `README.md`, `llms.txt`, `doc/`)
 - **The pub.dev listing leads with the job and points at the new home.** A new description, the homepage `https://anilcancakir.com/magic/social_auth`, and the repository and issue tracker under `anilcancakir`; the `documentation` key is gone. (`pubspec.yaml`)
 - **The README and the `doc/` pages are rewritten.** The package has no disconnect method; unlinking a provider is the backend's `DELETE user/social-accounts/{provider}`.
 
