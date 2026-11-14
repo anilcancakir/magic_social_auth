@@ -1,73 +1,45 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/fluttersdk/magic/master/.github/magic-logo.svg" width="120" alt="Magic Logo" />
+  <img src="https://raw.githubusercontent.com/anilcancakir/magic_social_auth/master/.github/magic-logo.svg" width="120" alt="Magic Social Auth Logo" />
 </p>
 
 <h1 align="center">Magic Social Auth</h1>
 
 <p align="center">
-  <strong>Laravel Socialite-style social authentication for the Magic Framework.</strong><br/>
-  Native Google and Apple sheets, a backend-hosted browser flow for GitHub and Microsoft, on iOS, Android and web.
+  <strong>Let users sign in with Google, Apple, GitHub and Microsoft.</strong><br/>
+  Social sign-in for Magic apps: native Google and Apple sheets, a PKCE browser flow for the rest, and <code>social:install</code> writes the native edits while <code>social:doctor</code> checks them. Your <code>magic-starter-laravel</code> backend decides the outcome; the app owns the session.
 </p>
 
 <p align="center">
-  <a href="https://pub.dev/packages/magic_social_auth"><img src="https://img.shields.io/pub/v/magic_social_auth.svg" alt="pub.dev version" /></a>
-  <a href="https://github.com/fluttersdk/magic_social_auth/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/fluttersdk/magic_social_auth/ci.yml?branch=master&label=CI" alt="CI Status" /></a>
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" /></a>
-  <a href="https://pub.dev/packages/magic_social_auth/score"><img src="https://img.shields.io/pub/points/magic_social_auth" alt="pub points" /></a>
-  <a href="https://github.com/fluttersdk/magic_social_auth/stargazers"><img src="https://img.shields.io/github/stars/fluttersdk/magic_social_auth?style=flat" alt="GitHub Stars" /></a>
+  <a href="https://pub.dev/packages/magic_social_auth"><img src="https://img.shields.io/pub/v/magic_social_auth.svg" alt="pub package"></a>
+  <a href="https://github.com/anilcancakir/magic_social_auth/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/anilcancakir/magic_social_auth/ci.yml?branch=master&label=CI" alt="CI"></a>
+  <a href="https://codecov.io/gh/anilcancakir/magic_social_auth"><img src="https://codecov.io/gh/anilcancakir/magic_social_auth/graph/badge.svg" alt="codecov"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="https://pub.dev/packages/magic_social_auth/score"><img src="https://img.shields.io/pub/points/magic_social_auth" alt="pub points"></a>
 </p>
 
 <p align="center">
-  <a href="https://magic.fluttersdk.com/social-auth">Website</a> ·
-  <a href="https://magic.fluttersdk.com/packages/social-auth/getting-started/installation">Docs</a> ·
+  <a href="https://anilcancakir.com/magic_social_auth">Documentation</a> ·
   <a href="https://pub.dev/packages/magic_social_auth">pub.dev</a> ·
-  <a href="https://github.com/fluttersdk/magic_social_auth/issues">Issues</a> ·
-  <a href="https://github.com/fluttersdk/magic_social_auth/discussions">Discussions</a>
+  <a href="https://github.com/anilcancakir/magic_social_auth/issues">Issues</a>
 </p>
 
----
+## At a glance
 
-## Why Magic Social Auth?
+| Fact | Value |
+|---|---|
+| Package | [`magic_social_auth`](https://pub.dev/packages/magic_social_auth) |
+| Install | `flutter pub add magic_social_auth`, then `dart run magic:dowel plugin:install magic_social_auth` and `dart run magic:dowel social:install` |
+| Import | `package:magic_social_auth/magic_social_auth.dart` |
+| Entry points | `SocialAuth` (facade), `SocialAuthManager`, `SocialDriver` with `GoogleDriver`, `AppleDriver` and `RedirectDriver`, `SocialAuthResult`, `SocialAuthButtons`, `SocialAuthServiceProvider`; `social:install` and `social:doctor` (CLI) |
+| Platforms | iOS, Android and web. macOS, Windows and Linux are not supported. |
+| Requires | Dart >=3.13, Flutter >=3.47, `magic` ^1.0.0, and a `magic-starter-laravel` backend with the `social-login` feature on |
+| Dependencies | `magic`, `google_sign_in`, `sign_in_with_apple`, `flutter_web_auth_2`, `crypto`; dowel runs the CLI |
+| License | MIT |
 
-Adding social login to a Flutter app means juggling platform SDKs, OAuth redirects, nonce and PKCE rules, native project edits on three platforms, and a backend that has to agree on every value. Every project reinvents the same boilerplate.
-
-**Magic Social Auth** is the client of `magic-starter-laravel`'s social login. `social:install` makes the native edits, `social:doctor` checks them and prints the backend `.env` lines, and the drivers run the flow: native Google and Apple sheets on mobile, a backend-hosted browser flow with PKCE for everything else.
-
-> **One contract, four providers.** Google, Apple, GitHub and Microsoft on iOS, Android and web, signing in, connecting, confirming and disconnecting against the same backend API.
-
----
-
-## Features
-
-| | Feature | Description |
-|---|---------|-------------|
-| :key: | **Socialite-Style API** | `SocialAuth.driver('google').signIn()`, familiar and expressive |
-| :iphone: | **Native Sheets** | Google on iOS and Android, Sign in with Apple on iOS: the ID token is verified by the backend, never a provider access token |
-| :globe_with_meridians: | **Browser Flow with PKCE** | GitHub and Microsoft everywhere, Apple on Android and web, Google on web: backend-hosted, one-time code, verifier-bound |
-| :link: | **Connect and Confirm** | Link another provider to a signed-in account, or re-authenticate with a linked one for a step-up proof |
-| :hammer_and_wrench: | **social:install** | Config, iOS Google keys and URL scheme, Sign in with Apple entitlement, Android callback activity, `web/auth.html`, the starter bridge |
-| :stethoscope: | **social:doctor** | Checks the native setup against the config and prints the backend env to set |
-| :electric_plug: | **Extensible Drivers** | Add a provider via `SocialAuth.manager.extend()` |
-| :art: | **Config-Driven UI** | `SocialAuthButtons` renders enabled, platform-supported providers; Apple first on iOS |
-| :package: | **Service Provider** | Two-phase bootstrap via Magic's IoC container |
-
----
-
-## Quick Start
-
-### 1. Add the dependency
-
-```yaml
-dependencies:
-  magic_social_auth: ^1.0.0
-```
-
-Requires Dart `^3.13.0` and Flutter `>=3.47.0`.
-
-### 2. Install
+## Install
 
 ```bash
-flutter pub get
+flutter pub add magic_social_auth
 dart run magic:dowel plugin:install magic_social_auth
 dart run magic:dowel social:install \
   --providers=google,apple,github,microsoft \
@@ -75,41 +47,81 @@ dart run magic:dowel social:install \
   --google-server-client-id=123-def.apps.googleusercontent.com \
   --ios-scheme=myapp \
   --android-callback=https://auth.example.com/auth/social
-```
-
-Every flag is documented in the [installation guide](https://magic.fluttersdk.com/packages/social-auth/getting-started/installation).
-
-### 3. Check it
-
-```bash
 dart run magic:dowel social:doctor
 ```
 
-The doctor names every missing native edit and prints the `MAGIC_STARTER_SOCIAL_*` lines to set in the backend `.env`, and the callback URL each provider console has to list.
+`plugin:install` registers the dowel commands. `social:install` registers `SocialAuthServiceProvider` in `lib/config/app.dart`, writes `lib/config/social_auth.dart` and adds it to `Magic.init`'s `configFactories`, then makes the native edits for the providers you enable: the Google keys and URL scheme in `Info.plist`, the Sign in with Apple entitlement, the Android callback activity and `web/auth.html`. When the app lists `magic_starter` it also publishes the bridge that feeds the starter's screens. Every flag is optional, `--dry-run` previews, and a file that changed since the last install is reported as a conflict until you pass `--force`.
 
-### 4. Sign in
+`social:doctor` checks the result and prints the `MAGIC_STARTER_SOCIAL_*` lines the backend `.env` needs, plus the callback URL each provider console has to list. It exits 1 while a check fails. It cannot prove that an Android App Link verifies or that a provider console lists the callback; those stay a device check.
+
+## Sign in
 
 ```dart
-final SocialAuthResult result = await SocialAuth.driver('google').signIn();
+import 'package:magic/magic.dart';
+import 'package:magic_social_auth/magic_social_auth.dart';
 
-if (result.isTwoFactor) {
-  // Finish at auth/two-factor-challenge with result.twoFactorToken.
-  return;
+Future<void> signInWith(String provider) async {
+  try {
+    final SocialAuthResult result = await SocialAuth.driver(provider).signIn();
+
+    if (result.isTwoFactor) {
+      // Finish at auth/two-factor-challenge with result.twoFactorToken.
+      return;
+    }
+
+    await Auth.login(
+      {'token': result.token},
+      SocialAuth.manager.createUser(result.user!),
+    );
+  } on SocialAuthCancelledException catch (error) {
+    if (!error.superseded) {
+      // The user backed out; offer a retry.
+    }
+  } on SocialAuthException catch (error) {
+    // Switch on error.code, never on error.message.
+    Log.error('Social sign-in refused: ${error.code}');
+  }
 }
-
-await Auth.login(
-  {'token': result.token},
-  SocialAuth.manager.createUser(result.user!),
-);
 ```
 
-With `magic_starter` you write none of this: the bridge `social:install` publishes feeds the result into the starter's login, registration and account screens.
+The package never logs the app in. A driver answers a `SocialAuthResult` and the caller decides what a session, a 2FA challenge or a cancelled deletion means. With `magic_starter` you write none of this: the published bridge hands the result to the starter's login and registration.
 
----
+| Field | Set by |
+|-------|--------|
+| `token`, `user` | A completed sign-in: the Sanctum token and the user resource. Both are `null` on a challenged sign-in. |
+| `isTwoFactor`, `twoFactorToken` | A sign-in on an account with confirmed 2FA. |
+| `deletionCancelled` | A sign-in that cancelled a scheduled account deletion. |
+| `connectedProvider` | A connect. |
+| `confirmationToken` | A confirm. |
 
-## Configuration
+Apple answers an `AppleSignInResult`, which adds `givenName` and `familyName`: Apple shares the name on the first authorisation only, so pass it on to a profile update or it is lost.
 
-`social:install` writes `lib/config/social_auth.dart`:
+Failure modes:
+
+| Situation | What happens |
+|-----------|--------------|
+| The user closes the sheet or popup | `SocialAuthCancelledException`. `superseded` is `true` when another flow took the browser; stay quiet then. On Android a failed App Link verification and a misconfigured Google client report the same cancel. |
+| The backend refuses | `SocialAuthException` with the backend's `code` (`social_email_taken`, `flow_expired`, `step_up_required`, ...) and `statusCode`. |
+| The SDK or the browser fails | `SocialAuthException` coded `sdk_error`; the detail goes to `Log.error`. |
+| Google has no `server_client_id` | `sdk_error`, and the logged message names the key. |
+| A flow needs `social_auth.callback.ios` or `.android` and it is empty | `SocialAuthException` that names the key. |
+| `enabled: false` for the provider | `SocialAuth.driver(name)` throws `ProviderNotConfiguredException`. |
+| A name that is neither built in nor registered | `ArgumentError`. `SocialAuth.supports(name)` answers `false` for both this and the previous row. |
+| macOS, Windows or Linux | `SocialAuth.supports(name)` is `false`; a browser-flow driver called anyway throws `UnsupportedPlatformException`. |
+| A second browser flow on mobile while one is open | `SocialAuthCancelledException(superseded: true)`. |
+
+## Providers and platforms
+
+| Provider | iOS | Android | Web |
+|---|---|---|---|
+| Google | native SDK | native SDK | browser flow |
+| Apple | native sheet | browser flow | browser flow |
+| GitHub | browser flow | browser flow | browser flow |
+| Microsoft | browser flow | browser flow | browser flow |
+
+The native flows post the SDK's ID token to `auth/social/{provider}/token`. The browser flow is hosted by the backend: the app mints a PKCE pair, opens `<network.drivers.api.base_url>/auth/social/{provider}/redirect`, receives a one-time code on the callback and trades it with the verifier at `auth/social/exchange`. iOS returns through a custom scheme (an https callback needs iOS 17.4), Android through an https App Link on a dedicated host, the web through a popup and `web/auth.html`.
+
+`social:install` writes the config:
 
 ```dart
 Map<String, dynamic> get socialAuthConfig => {
@@ -132,137 +144,125 @@ Map<String, dynamic> get socialAuthConfig => {
 };
 ```
 
-The callbacks must equal the backend's `MAGIC_STARTER_SOCIAL_IOS_REDIRECT` and `MAGIC_STARTER_SOCIAL_ANDROID_REDIRECT`. Provider console setup (Google iOS, Android and web clients, the Apple Services ID and key, a GitHub OAuth app, an Entra Web registration) is covered in the [installation guide](https://magic.fluttersdk.com/packages/social-auth/getting-started/installation) and the [configuration reference](https://magic.fluttersdk.com/packages/social-auth/getting-started/configuration).
+`callback.ios` and `callback.android` must equal the backend's `MAGIC_STARTER_SOCIAL_IOS_REDIRECT` and `MAGIC_STARTER_SOCIAL_ANDROID_REDIRECT`: the backend takes the redirect target only from its own config. Client secrets and the Apple key live in the backend, never in the app. The backend's base URL is `network.drivers.api.base_url`.
 
----
+## Connect and confirm
 
-## Usage
-
-### Sign In, Connect, Confirm
+A signed-in user links another provider with `connect`, or re-authenticates with a linked one for a step-up proof with `confirm`.
 
 ```dart
-final SocialDriver driver = SocialAuth.driver('github');
+import 'package:magic_social_auth/magic_social_auth.dart';
 
-await driver.signIn();                          // sign in, or register
-await driver.connect({'password': password});   // link to the signed-in account
-await driver.confirm();                         // step-up proof in result.confirmationToken
-```
+Future<void> link(String password) async {
+  // Mobile: one call.
+  await SocialAuth.driver('github').connect({'password': password});
+}
 
-`connect` takes the step-up proof the account can give (`password`, a TOTP `code`, or a `confirmation_token` from `confirm()`); a guest sends `null`. On the web, a popup opened after an `await` is blocked: use `beginConnect(proof)` and run the returned opener from a second tap.
+Future<String?> stepUp() async {
+  final SocialAuthResult result = await SocialAuth.driver('google').confirm();
 
-### Check Platform Support
-
-```dart
-if (SocialAuth.supports('apple')) {
-  // Show Sign in with Apple
+  // Send it as {'confirmation_token': proof} to the gated call.
+  return result.confirmationToken;
 }
 ```
 
-### Custom Driver
+| Member | Meaning |
+|--------|---------|
+| `connect(proof)` | Links the provider. `proof` is `{'password': ...}`, `{'code': ...}` or `{'confirmation_token': ...}`; `null` for a guest. Mint it per call. |
+| `beginConnect(proof)` | The web variant: does the network half and returns an opener to call from a second tap, because a popup opened after an `await` is blocked. |
+| `confirm()` | Answers `confirmationToken`, a single-use proof for a password-less account's sensitive actions. Needs the caller's bearer token. |
+
+There is no disconnect: unlinking is the backend's `DELETE user/social-accounts/{provider}`, which `magic_starter`'s screens call. The backend answers `step_up_required` when a connect carries no live proof and `last_login_method` when an unlink would remove a password-less account's last way in.
+
+## Buttons
+
+`SocialAuthButtons` renders one button per enabled provider that runs on this platform, in config `order`, with Apple first on iOS.
 
 ```dart
-SocialAuth.manager.extend('gitlab', (config) => RedirectDriver('gitlab', config));
+import 'package:flutter/widgets.dart';
+import 'package:magic_social_auth/magic_social_auth.dart';
+
+Widget buildButtons(void Function(String provider) onPressed) {
+  return SocialAuthButtons(
+    // No await before signIn(): a web popup must open in the tap's own run.
+    onPressed: onPressed,
+    mode: SocialAuthMode.signIn,
+  );
+}
 ```
 
-### SocialAuthButtons Widget
+`onPressed` runs synchronously from the tap. The widget is built from Wind widgets, so it needs a `WindTheme` above it (`MagicApplication` provides one). Labels come from `trans('auth.sign_in_with')` and `trans('auth.sign_up_with')` unless you pass `labelBuilder`. `loadingProvider` shows a spinner on the tapped button and disables the others.
+
+## Custom providers
 
 ```dart
-SocialAuthButtons(
-  onPressed: (provider) => controller.doSocialSignIn(provider),
-  loadingProvider: currentlyLoading,
-  mode: SocialAuthMode.signIn, // or SocialAuthMode.signUp
-)
+import 'package:magic_social_auth/magic_social_auth.dart';
+
+void registerGitLab() {
+  SocialAuth.manager.extend(
+    'gitlab',
+    (config) => RedirectDriver('gitlab', config),
+  );
+}
 ```
 
-`onPressed` runs synchronously from the tap, which a web popup needs.
+Register before the first `SocialAuth.driver('gitlab')`. The backend must host a flow for the provider; the app only carries the PKCE pair. `social_auth.providers.gitlab.enabled: false` still disables it.
 
-### Sign Out
+## Sign out
+
+`SocialAuth.signOut()` signs out the drivers cached in this process, which is how Google's SDK session ends and the account picker returns. A session restored at boot has cached none, so an app without `magic_starter` signs Google out by name on its own sign-out:
 
 ```dart
-await SocialAuth.signOut(); // signs out every cached driver (Google's SDK session)
+import 'dart:async';
+
+import 'package:magic/magic.dart';
+import 'package:magic_social_auth/magic_social_auth.dart';
+
+void signGoogleOutOnSignOut() {
+  Auth.stateNotifier.addListener(() {
+    if (!Auth.check() && SocialAuth.supports('google')) {
+      unawaited(SocialAuth.driver('google').signOut());
+    }
+  });
+}
 ```
 
-`SocialAuth.signOut()` only reaches drivers cached in this process. An app without `magic_starter` must sign Google out on its own sign-out with `SocialAuth.driver('google').signOut()`; the starter bridge does it for starter apps.
+`SocialAuth.supports('google')` is `false` when Google is disabled, so the lookup never throws. The starter bridge does the same for starter apps.
 
----
+## For AI coding agents
 
-## Platform Support
+Rules for an agent writing code against this package. Each one is a mistake that fails silently in a review, on a device or at the backend.
 
-| Provider | iOS | Android | Web |
-|---|---|---|---|
-| Google | native SDK | native SDK | browser flow |
-| Apple | native sheet | browser flow | browser flow |
-| GitHub | browser flow | browser flow | browser flow |
-| Microsoft | browser flow | browser flow | browser flow |
+| Do | Because |
+|----|---------|
+| Import only `package:magic_social_auth/magic_social_auth.dart` | Everything under `src/` is private; `cli.dart` carries the dowel provider only. |
+| Register `SocialAuthServiceProvider` through `social:install` | It is not auto-registered, and without it `SocialAuth` cannot resolve the manager. |
+| Run `dart run magic:dowel social:doctor` after any native or config change | A wrong native edit is silent: a sheet that closes at once, a button that does nothing, a review rejection. |
+| Call `SocialAuth.driver(name).signIn()` straight from the tap handler | On the web a popup opened after an `await` is blocked. |
+| Run `Auth.login` yourself, or let the starter bridge do it | The package never creates a session. |
+| Check `isTwoFactor` before reading `token` | `token` and `user` are `null` on a challenged sign-in. |
+| Switch on `SocialAuthException.code`, never on `message` | The backend translates the message. |
+| Keep `callback.ios` and `callback.android` equal to the backend's redirect env | A mismatch lands the browser where the app is not listening. |
+| Give Android a dedicated callback host | Another App Link filter on the same host may open the wrong activity. |
+| Build the `proof` map per call and call `beginConnect` again per attempt | Every connect mints a new PKCE pair, link ticket and proof; none is reusable. |
+| Never send a nonce for Google, or the raw nonce to Apple, from a custom driver | Google takes none; Apple gets the sha256 hex and the backend gets the raw value. |
+| Sign Google out by name on every transition to signed-out when there is no starter bridge | `SocialAuth.signOut()` reaches only cached drivers. |
+| Leave client secrets and the Apple key out of the app | They belong to the backend's environment. |
+| In a test, fake the platform through the `@visibleForTesting` seams, not a method channel | The SDK and browser calls only exist behind a platform channel. |
 
-iOS returns through a custom scheme (an https callback needs iOS 17.4). Android returns through an https App Link on a dedicated host. Web uses a popup and `web/auth.html`. macOS, Windows and Linux are not supported.
+## Dependencies
 
----
+`magic` for the container, `Config`, `Http` and `Auth`; `google_sign_in` and `sign_in_with_apple` for the native sheets; `flutter_web_auth_2` for the browser flow; `crypto` for the PKCE challenge and the Apple nonce hash; dowel to run `social:install` and `social:doctor` through `dart run magic:dowel`. The commands live in `package:magic_social_auth/cli.dart`, which imports no UI toolkit so the command line runs as a plain Dart process.
 
-## Architecture
+## Links
 
-```
-SocialAuth.driver('github').signIn()
-  → SocialAuthManager resolves a driver for the platform (Google/Apple native, else RedirectDriver)
-  → SocialFlow: PKCE pair → system browser → backend → callback with a one-time code
-  → POST auth/social/exchange {code, code_verifier}
-  → SocialAuthResult (token + user, or a 2FA challenge)
-  → the caller runs Auth.login
-```
-
-| Pattern | Implementation |
-|---------|---------------|
-| Singleton Manager | `SocialAuthManager`, central orchestrator |
-| Strategy (Driver) | `GoogleDriver`, `AppleDriver`, `RedirectDriver` implement `SocialDriver` |
-| Flow client | `SocialFlow` speaks the backend protocol; `Pkce` and `Nonce` mint the per-flow secrets |
-| Service Provider | Two-phase bootstrap: `register()` (sync) → `boot()` (async) |
-| Static Facade | `SocialAuth`, zero-instance access to the manager |
-
----
-
-## Upgrading from 0.0.7
-
-0.0.8 is a breaking release.
-
-- **Removed:** `SocialToken`, `SocialAuthHandler`, the default HTTP handler that posted a provider token and `SocialAuth.manager.setHandler()`, the Microsoft and GitHub drivers (both are a `RedirectDriver` now), `getToken()` and `authenticate()` on drivers, and the per-provider config keys `client_id`, `scopes`, `tenant` and the mobile scheme and web callback URL keys, plus the top-level `endpoint`.
-- **Changed:** drivers answer a `SocialAuthResult`; the app (or the starter bridge) calls `Auth.login`. `SocialAuthButtons` takes `onPressed` instead of `onAuthenticate`.
-- **Added:** Apple, `signIn`, `connect`, `beginConnect`, `confirm`, `social:doctor`, and the `callback.ios` and `callback.android` config keys.
-- **Raised:** Dart `^3.12.0`, Flutter `>=3.44.0`, and the CLI package floor (now `dowel`, see CHANGELOG).
-- **Backend:** requires `magic-starter-laravel` with the `social-login` feature.
-
----
-
-## Documentation
-
-| Document | Description |
-|----------|-------------|
-| [Installation](https://magic.fluttersdk.com/packages/social-auth/getting-started/installation) | `social:install` flags, `social:doctor`, backend env, provider consoles, platform notes |
-| [Configuration](https://magic.fluttersdk.com/packages/social-auth/getting-started/configuration) | Every config key |
-| [Drivers](https://magic.fluttersdk.com/packages/social-auth/basics/drivers) | The driver contract, built-in drivers and custom ones |
-| [Flows](https://magic.fluttersdk.com/packages/social-auth/basics/flows) | Native token flow, browser flow, connect, confirm, errors |
-| [Architecture](https://magic.fluttersdk.com/packages/social-auth/architecture/overview) | Manager, facade, driver and flow client |
-
----
-
-## Contributing
-
-Contributions are welcome! Please see the [issues page](https://github.com/fluttersdk/magic_social_auth/issues) for open tasks or to report bugs.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Write tests following the [TDD flow](#) — red, green, refactor
-4. Ensure all checks pass: `flutter test`, `dart analyze`, `dart format .`
-5. Submit a pull request
-
----
+- [Documentation](https://anilcancakir.com/magic_social_auth/docs/getting-started/installation): installation, configuration, drivers, flows and the architecture
+- [API reference](https://pub.dev/documentation/magic_social_auth/latest/)
+- [llms.txt](llms.txt) and the [agent skill](skills/magic-social-auth/SKILL.md) for AI coding agents: `npx skills add anilcancakir/magic_social_auth`
+- [Changelog](CHANGELOG.md)
+- [Report an issue](https://github.com/anilcancakir/magic_social_auth/issues)
+- [Security policy](SECURITY.md)
 
 ## License
 
-Magic Social Auth is open-sourced software licensed under the [MIT License](LICENSE).
-
----
-
-<p align="center">
-  Built with care by <a href="https://github.com/fluttersdk">FlutterSDK</a><br/>
-  <sub>If Magic Social Auth helps your project, consider giving it a <a href="https://github.com/fluttersdk/magic_social_auth">star on GitHub</a>.</sub>
-</p>
+MIT, see [LICENSE](LICENSE). Built by [Anılcan Çakır](https://anilcancakir.com).

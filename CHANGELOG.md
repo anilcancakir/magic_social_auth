@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### Added
+
+- **An `llms.txt` for coding agents.** One file at the repository root describes the public API, the flows and the platform rules.
+- **A `magic-social-auth` agent skill.** Install it with `npx skills add anilcancakir/magic_social_auth`.
+- **A runnable `example/` app.** It lists each provider with the driver it resolves to and a sign-in button.
+
+### Changed
+
+- **The pub.dev listing leads with the job and points at the new home.** A new description, the homepage `https://anilcancakir.com/magic_social_auth`, and the repository and issue tracker under `anilcancakir`; the `documentation` key is gone. (`pubspec.yaml`)
+- **The README and the `doc/` pages are rewritten.** The package has no disconnect method; unlinking a provider is the backend's `DELETE user/social-accounts/{provider}`.
+
 ## [1.0.0] - 2026-11-14
 
 ### Changed

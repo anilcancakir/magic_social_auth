@@ -8,12 +8,13 @@ body:
       label: Module
       description: Which module is affected?
       options:
-        - Drivers (Google, Microsoft, GitHub)
+        - Drivers (Google, Apple, browser flow)
         - SocialAuthManager
         - ServiceProvider
         - UI (SocialAuthButtons)
-        - Models (SocialToken, SocialPlatform)
+        - Models (SocialAuthResult, SocialPlatform)
         - Exceptions
+        - CLI (social:install, social:doctor)
         - Other
     validations:
       required: true
@@ -28,13 +29,13 @@ body:
     id: steps
     attributes:
       label: Steps to Reproduce
-      description: Steps to reproduce the behavior
+      description: Steps to reproduce the behaviour
     validations:
       required: true
   - type: textarea
     id: expected
     attributes:
-      label: Expected Behavior
+      label: Expected Behaviour
       description: What you expected to happen
     validations:
       required: true
@@ -42,7 +43,14 @@ body:
     id: version
     attributes:
       label: Package Version
-      placeholder: "0.0.1-alpha.1"
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: flutter-version
+    attributes:
+      label: Flutter and Dart Version
+      placeholder: "Flutter 3.47.0 / Dart 3.13.0"
     validations:
       required: true
   - type: dropdown
