@@ -18,7 +18,7 @@ import 'package:magic/magic.dart';
 import 'package:magic_social_auth/magic_social_auth.dart';
 
 Future<void> signInWith(String provider) async {
-  // SocialAuthServiceProvider is registered in lib/config/app.dart by social:install.
+  // SocialAuthServiceProvider is registered in lib/config/app.dart by plugin:install and by social:install.
   try {
     final SocialAuthResult result = await SocialAuth.driver(provider).signIn();
 
