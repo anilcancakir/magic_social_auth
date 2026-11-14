@@ -1,19 +1,19 @@
-/// Flutter-free artisan-CLI surface for magic_social_auth.
+/// Flutter-free dowel-CLI surface for magic_social_auth.
 ///
-/// Exposes ONLY the artisan-CLI surface ([MagicSocialAuthArtisanProvider]).
+/// Exposes ONLY the dowel-CLI surface ([MagicSocialAuthDowelProvider]).
 /// Does NOT export any Flutter runtime symbols (no `dart:ui` imports), so this
-/// barrel is safe for consumption from pure-Dart artisan dispatchers.
+/// barrel is safe for consumption from pure-Dart dowel dispatchers.
 ///
-/// Consumers register the provider in their `bin/artisan.dart`:
+/// `plugin:install` registers the provider in the consumer's `bin/dispatcher.dart`; wiring it by hand looks like:
 ///
 /// ```dart
-/// import 'package:fluttersdk_artisan/artisan.dart';
-/// import 'package:magic_social_auth/cli.dart' show MagicSocialAuthArtisanProvider;
+/// import 'package:dowel/dowel.dart';
+/// import 'package:magic_social_auth/cli.dart' show MagicSocialAuthDowelProvider;
 ///
 /// Future<void> main(List<String> args) async {
-///   final registry = ArtisanRegistry()
-///     ..registerProvider(MagicSocialAuthArtisanProvider());
-///   exit(await ArtisanApplication(registry: registry).dispatch(args));
+///   final registry = DowelRegistry()
+///     ..registerProvider(MagicSocialAuthDowelProvider());
+///   exit(await DowelApplication(registry: registry).dispatch(args));
 /// }
 /// ```
 ///
@@ -21,4 +21,4 @@
 /// `package:magic_social_auth/magic_social_auth.dart` for the full surface.
 library;
 
-export 'src/cli/social_auth_artisan_provider.dart';
+export 'src/cli/social_auth_dowel_provider.dart';

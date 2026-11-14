@@ -27,10 +27,6 @@
 
 ---
 
-> **Alpha**: `magic_social_auth` is under active development. APIs may change between minor versions until `1.0.0`.
-
----
-
 ## Why Magic Social Auth?
 
 Adding social login to a Flutter app means juggling platform SDKs, OAuth redirects, nonce and PKCE rules, native project edits on three platforms, and a backend that has to agree on every value. Every project reinvents the same boilerplate.
@@ -63,17 +59,17 @@ Adding social login to a Flutter app means juggling platform SDKs, OAuth redirec
 
 ```yaml
 dependencies:
-  magic_social_auth: ^0.0.11
+  magic_social_auth: ^1.0.0
 ```
 
-Requires Dart `^3.12.0` and Flutter `>=3.44.0`.
+Requires Dart `^3.13.0` and Flutter `>=3.47.0`.
 
 ### 2. Install
 
 ```bash
 flutter pub get
-dart run fluttersdk_artisan plugin:install magic_social_auth
-dart run <app>:artisan social:install \
+dart run magic:dowel plugin:install magic_social_auth
+dart run magic:dowel social:install \
   --providers=google,apple,github,microsoft \
   --google-ios-client-id=123-abc.apps.googleusercontent.com \
   --google-server-client-id=123-def.apps.googleusercontent.com \
@@ -86,7 +82,7 @@ Every flag is documented in the [installation guide](https://magic.fluttersdk.co
 ### 3. Check it
 
 ```bash
-dart run <app>:artisan social:doctor
+dart run magic:dowel social:doctor
 ```
 
 The doctor names every missing native edit and prints the `MAGIC_STARTER_SOCIAL_*` lines to set in the backend `.env`, and the callback URL each provider console has to list.
@@ -231,7 +227,7 @@ SocialAuth.driver('github').signIn()
 - **Removed:** `SocialToken`, `SocialAuthHandler`, the default HTTP handler that posted a provider token and `SocialAuth.manager.setHandler()`, the Microsoft and GitHub drivers (both are a `RedirectDriver` now), `getToken()` and `authenticate()` on drivers, and the per-provider config keys `client_id`, `scopes`, `tenant` and the mobile scheme and web callback URL keys, plus the top-level `endpoint`.
 - **Changed:** drivers answer a `SocialAuthResult`; the app (or the starter bridge) calls `Auth.login`. `SocialAuthButtons` takes `onPressed` instead of `onAuthenticate`.
 - **Added:** Apple, `signIn`, `connect`, `beginConnect`, `confirm`, `social:doctor`, and the `callback.ios` and `callback.android` config keys.
-- **Raised:** Dart `^3.12.0`, Flutter `>=3.44.0`, `fluttersdk_artisan ^0.0.18`.
+- **Raised:** Dart `^3.12.0`, Flutter `>=3.44.0`, and the CLI package floor (now `dowel`, see CHANGELOG).
 - **Backend:** requires `magic-starter-laravel` with the `social-login` feature.
 
 ---

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:fluttersdk_artisan/artisan.dart';
+import 'package:dowel/dowel.dart';
 
 import 'social_install_command.dart';
 
@@ -19,9 +19,9 @@ import 'social_install_command.dart';
 /// callback; those stay a device and a console check.
 ///
 /// ```bash
-/// dart run <app>:artisan social:doctor
+/// dart run magic:dowel social:doctor
 /// ```
-class SocialDoctorCommand extends ArtisanCommand {
+class SocialDoctorCommand extends DowelCommand {
   @override
   String get signature => 'social:doctor';
 
@@ -36,7 +36,7 @@ class SocialDoctorCommand extends ArtisanCommand {
   String getProjectRoot() => FileHelper.findProjectRoot();
 
   @override
-  Future<int> handle(ArtisanContext ctx) async {
+  Future<int> handle(DowelContext ctx) async {
     final _Inspection inspection = _Inspection(getProjectRoot());
 
     // 1. Without the config nothing else can be judged.
@@ -126,9 +126,9 @@ class _SocialConfig {
         for (final MapEntry<String, String> block in blocks.entries)
           if (block.key != 'callback')
             block.key:
-                RegExp(
-                  r"'enabled'\s*:\s*(true|false)",
-                ).firstMatch(block.value)?.group(1) !=
+                RegExp(r"'enabled'\s*:\s*(true|false)")
+                    .firstMatch(block.value)
+                    ?.group(1) !=
                 'false',
       },
       googleIosClientId: literal(blocks['google'], 'ios_client_id'),
@@ -349,9 +349,10 @@ class _Inspection {
   /// The Google SDK reads its client ids from `Info.plist` and listens on the
   /// iOS client's reversed id; an empty id is already a config issue.
   List<String> _checkGoogleKeys(String plist, _SocialConfig config) {
-    String? key(String name) => RegExp(
-      '<key>$name</key>\\s*<string>([^<]*)</string>',
-    ).firstMatch(plist)?.group(1);
+    String? key(String name) =>
+        RegExp('<key>$name</key>\\s*<string>([^<]*)</string>')
+            .firstMatch(plist)
+            ?.group(1);
 
     final Set<String> schemes = <String>{
       for (final RegExpMatch array in RegExp(

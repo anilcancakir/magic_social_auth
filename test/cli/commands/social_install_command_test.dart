@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fluttersdk_artisan/artisan.dart';
+import 'package:dowel/dowel.dart';
 import 'package:magic_social_auth/src/cli/commands/social_install_command.dart';
 
-/// Base flags required by ArtisanInstallCommand for all invocations.
+/// Base flags required by DowelInstallCommand for all invocations.
 const Map<String, dynamic> _baseFlags = <String, dynamic>{
   'force': false,
   'dry-run': false,
@@ -28,9 +28,9 @@ const Map<String, dynamic> fullInstallFlags = <String, dynamic>{
 const String reversedIosClientId =
     'com.googleusercontent.apps.1234567890-iosclient';
 
-/// Builds a bare [ArtisanContext] with the given flag overrides.
-ArtisanContext _ctx(Map<String, dynamic> overrides, [BufferedOutput? output]) {
-  return ArtisanContext.bare(
+/// Builds a bare [DowelContext] with the given flag overrides.
+DowelContext _ctx(Map<String, dynamic> overrides, [BufferedOutput? output]) {
+  return DowelContext.bare(
     MapInput({..._baseFlags, ...overrides}),
     output ?? BufferedOutput(),
   );
@@ -54,7 +54,7 @@ class TestableSocialInstallCommand extends SocialInstallCommand {
   Future<String?> resolveManifestPath() async => manifestPath;
 
   @override
-  InstallContext buildContext(ArtisanContext ctx) =>
+  InstallContext buildContext(DowelContext ctx) =>
       InstallContext.real(ctx, projectRoot: projectRoot);
 }
 
@@ -177,7 +177,7 @@ name: test_app
 dependencies:
   flutter:
     sdk: flutter
-${withStarter ? '  magic_starter: ^0.0.38\n' : ''}''');
+${withStarter ? '  magic_starter: ^1.0.0\n' : ''}''');
 
   _write(root, 'lib/config/app.dart', '''
 import 'package:magic/magic.dart';
@@ -228,7 +228,7 @@ String snapshot(Directory root) {
       root
           .listSync(recursive: true)
           .whereType<File>()
-          .where((file) => !file.path.contains('/.artisan/'))
+          .where((file) => !file.path.contains('/.dowel/'))
           .toList()
         ..sort((a, b) => a.path.compareTo(b.path));
 
@@ -357,7 +357,7 @@ void main() {
 
         expect(run.exitCode, 0);
         expect(snapshot(tempDir), before);
-        expect(Directory('${tempDir.path}/.artisan').existsSync(), isFalse);
+        expect(Directory('${tempDir.path}/.dowel').existsSync(), isFalse);
         for (final String op in <String>[
           '[inject-plist-key:ios] GIDClientID',
           '[inject-plist-key:ios] GIDServerClientID',
@@ -585,26 +585,23 @@ void main() {
         },
       );
 
-      test(
-        'publishes no bridge when the app does not list magic_starter',
-        () async {
-          seedSocialProject(tempDir, withStarter: false);
+      test('publishes no bridge when the app does not list magic_starter', () async {
+        seedSocialProject(tempDir, withStarter: false);
 
-          final run = await runInstall(tempDir, fullInstallFlags);
+        final run = await runInstall(tempDir, fullInstallFlags);
 
-          expect(run.exitCode, 0, reason: run.output);
-          expect(
-            File(
-              '${tempDir.path}/lib/app/providers/social_auth_starter_service_provider.dart',
-            ).existsSync(),
-            isFalse,
-          );
-          expect(
-            read(tempDir, 'lib/config/app.dart'),
-            isNot(contains('SocialAuthStarterServiceProvider')),
-          );
-        },
-      );
+        expect(run.exitCode, 0, reason: run.output);
+        expect(
+          File(
+            '${tempDir.path}/lib/app/providers/social_auth_starter_service_provider.dart',
+          ).existsSync(),
+          isFalse,
+        );
+        expect(
+          read(tempDir, 'lib/config/app.dart'),
+          isNot(contains('SocialAuthStarterServiceProvider')),
+        );
+      });
 
       test('skips the web page when the app has no web target', () async {
         seedSocialProject(tempDir);
@@ -620,8 +617,7 @@ void main() {
         'never rewrites a CallbackActivity the app already declares',
         () async {
           seedSocialProject(tempDir);
-          const String handEdited =
-              '''<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+          const String handEdited = '''<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application android:label="Example">
         <activity
             android:name="com.linusu.flutter_web_auth_2.CallbackActivity"

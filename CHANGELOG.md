@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-14
+
+### Changed
+
+- **First stable release: version 1.0.0 replaces the planned 0.1.0 and requires `magic ^1.0.0` and `dowel ^1.0.0`; no API change beyond what is listed below.**
+- **BREAKING: the CLI moved from `fluttersdk_artisan` to `dowel`.** `MagicSocialAuthArtisanProvider` is now `MagicSocialAuthDowelProvider` (file `social_auth_dowel_provider.dart`), still exported from `package:magic_social_auth/cli.dart`. Re-run `dart run magic:dowel plugin:install magic_social_auth` to register it under `.dowel/`. (`lib/cli.dart`, `lib/src/cli/`, `install.yaml`, `pubspec.yaml`)
+- **The SDK floor is Dart `^3.13.0` and Flutter `>=3.47.0`.** Inherited from `magic` 1.0.0. The widget test imports `material_ui`, so it is a dev dependency. (`pubspec.yaml`, `test/ui/social_auth_buttons_test.dart`)
+- **Direct dependencies move to their latest releases.** `crypto` `^3.0.7` to `^3.0.8` and `dowel` `^1.0.0`. (`pubspec.yaml`)
+
 ## [0.0.11] - 2026-10-14
 
 ### Changed

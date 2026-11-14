@@ -22,13 +22,13 @@ Social sign-in for Flutter apps built on the Magic Framework, against the `magic
 
 | Dependency | Version |
 |---|---|
-| Dart SDK | `^3.12.0` |
-| Flutter | `>=3.44.0` |
-| magic | `^0.0.29` |
-| fluttersdk_artisan | `^0.0.20` |
+| Dart SDK | `^3.13.0` |
+| Flutter | `>=3.47.0` |
+| magic | `^1.0.0` |
+| dowel | `^1.0.0` |
 | Backend | `magic-starter-laravel` with the `social-login` feature on |
 
-The Dart and Flutter floors come from `sign_in_with_apple` 8.2. The package depends on `google_sign_in ^7.2.0`, `sign_in_with_apple ^8.2.0`, `flutter_web_auth_2 ^5.1.0` and `crypto ^3.0.7`.
+The Dart and Flutter floors are inherited from `magic` 1.0.0. The package depends on `google_sign_in ^7.2.0`, `sign_in_with_apple ^8.2.0`, `flutter_web_auth_2 ^5.1.0` and `crypto ^3.0.7`.
 
 The backend side (routes, provider keys, the error codes) is documented in magic-starter-laravel's `doc/basics/social-login.md` and `doc/basics/account-deletion.md`; this package is its client and the two must agree on every value listed under [Backend Environment](#backend-environment).
 
@@ -40,14 +40,14 @@ Add `magic_social_auth` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  magic_social_auth: ^0.0.11
+  magic_social_auth: ^1.0.0
 ```
 
-Fetch dependencies, then register the package's artisan commands (`social:install`, `social:doctor`):
+Fetch dependencies, then register the package's dowel commands (`social:install`, `social:doctor`):
 
 ```bash
 flutter pub get
-dart run fluttersdk_artisan plugin:install magic_social_auth
+dart run magic:dowel plugin:install magic_social_auth
 ```
 
 ---
@@ -57,7 +57,7 @@ dart run fluttersdk_artisan plugin:install magic_social_auth
 One non-interactive run leaves the app ready to sign in. Replace the values with your own:
 
 ```bash
-dart run <app>:artisan social:install \
+dart run magic:dowel social:install \
   --providers=google,apple,github,microsoft \
   --google-ios-client-id=123-abc.apps.googleusercontent.com \
   --google-server-client-id=123-def.apps.googleusercontent.com \
@@ -68,7 +68,7 @@ dart run <app>:artisan social:install \
 Preview without writing anything:
 
 ```bash
-dart run <app>:artisan social:install --dry-run
+dart run magic:dowel social:install --dry-run
 ```
 
 `<app>` is your app's pubspec package name. Every flag is optional; an omitted value is written as an empty string in the config and `social:doctor` names it until you fill it.
@@ -84,8 +84,8 @@ dart run <app>:artisan social:install --dry-run
 | `--android-callback=` | empty | The https App Link the browser flow returns to on Android (`https://auth.example.com/auth/social`). Written to the config as `callback.android` and declared as the `CallbackActivity` intent filter (host and path). Must be an https URL with a host and a path, without a query or fragment; use a host your app's other App Link filters do not claim (see [Android](#android)). |
 | `--force` | off | Overwrite files that were changed since the last install, or that the installer did not write. Without it such a file is reported as a conflict and the run exits 1. |
 | `--dry-run` | off | Print every staged operation and write nothing. |
-| `--non-interactive` | off | Inherited from every artisan install command. `social:install` asks no questions, so it changes nothing; it is safe to pass in CI. |
-| `--no-bootstrap` | off | Inherited from every artisan install command. `social:install` does not read it, and the post-install message is printed either way. |
+| `--non-interactive` | off | Inherited from every dowel install command. `social:install` asks no questions, so it changes nothing; it is safe to pass in CI. |
+| `--no-bootstrap` | off | Inherited from every dowel install command. `social:install` does not read it, and the post-install message is printed either way. |
 
 The Google client ids must look like `123-abc.apps.googleusercontent.com`; anything else stops the run before a file is touched.
 
@@ -113,7 +113,7 @@ The browser flow's iOS custom scheme is not registered in `Info.plist`: `ASWebAu
 ## <a name="run-socialdoctor"></a>Run social:doctor
 
 ```bash
-dart run <app>:artisan social:doctor
+dart run magic:dowel social:doctor
 ```
 
 Every way of getting the native half wrong is silent: a sign-in sheet that closes at once, a button that does nothing, a review rejection months later. The doctor reads `lib/config/social_auth.dart`, `Info.plist`, the entitlements files the app target signs with, `AndroidManifest.xml`, `web/` and the pubspec, and names what is missing. A section is printed only when the project has that platform. It exits 0 when every check passes and 1 otherwise.

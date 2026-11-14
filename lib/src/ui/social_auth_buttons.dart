@@ -160,8 +160,7 @@ class SocialAuthButtons extends StatelessWidget {
         ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
       ''',
       child: WDiv(
-        className:
-            'flex flex-row items-center justify-center gap-3 text-slate-900 dark:text-white',
+        className: 'flex flex-row items-center justify-center gap-3 text-slate-900 dark:text-white',
         children: [
           if (provider.iconSvg != null)
             WSvg.string(
