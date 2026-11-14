@@ -1,7 +1,7 @@
 # magic_social_auth install manifest (PluginInstaller DSL schema v1).
 #
 # SocialAuth is a Magic-side plugin: install registers
-# SocialAuthArtisanProvider into the consumer's lib/app/_plugins.g.dart
+# MagicSocialAuthDowelProvider into the consumer's lib/app/_plugins.g.dart
 # codegen barrel AND injects SocialAuthServiceProvider into
 # lib/config/app.dart's providers list so the Magic IoC container resolves
 # the runtime SocialAuth facade.
@@ -13,7 +13,7 @@
 # callback activity, web/auth.html, and the magic_starter bridge when the app
 # lists magic_starter.
 #
-# See doc/install_yaml_schema.md (in fluttersdk_artisan) for the full schema.
+# See doc/plugins/install-yaml.md (in dowel) for the full schema.
 
 plugin_name: magic_social_auth
 
@@ -32,7 +32,7 @@ post_install:
 
     2. Check the native setup and print the values the backend needs:
 
-         dart run <app>:artisan social:doctor
+         dart run magic:dowel social:doctor
 
     3. Set those values in the magic-starter-laravel .env, and register
        https://<api host>/magic-starter/social/{provider}/callback in each

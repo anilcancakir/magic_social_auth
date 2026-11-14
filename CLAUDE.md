@@ -2,7 +2,7 @@
 
 Social authentication plugin for Magic Framework: the client of magic-starter-laravel's social login (native Google and Apple sheets, a backend-hosted browser flow with PKCE for the rest). Laravel Socialite-style API with extensible drivers.
 
-**Version:** 0.0.11 · **Dart:** ^3.12.0 · **Flutter:** >=3.44.0
+**Version:** 0.1.0 · **Dart:** ^3.13.0 · **Flutter:** >=3.47.0
 
 ## Commands
 
@@ -19,7 +19,7 @@ Social authentication plugin for Magic Framework: the client of magic-starter-la
 ```
 lib/
 ├── magic_social_auth.dart       # Barrel export (Facade, Core, Contracts, Drivers, Flow, Providers, Models, Exceptions, UI, CLI)
-├── cli.dart                     # Flutter-free barrel: the artisan provider only
+├── cli.dart                     # Flutter-free barrel: the dowel provider only
 └── src/
     ├── social_auth_manager.dart  # Singleton manager: driver resolution per platform, extend(), sign out
     ├── contracts/                # SocialDriver (abstract): signIn, beginConnect, connect, confirm, signOut
@@ -30,7 +30,7 @@ lib/
     ├── providers/                # SocialAuthServiceProvider (register + boot)
     ├── exceptions/               # SocialAuthException (code, statusCode), SocialAuthCancelledException, UnsupportedPlatformException, ProviderNotConfiguredException
     ├── ui/                       # SocialAuthButtons (config-driven widget), SocialProviderIcons (registry)
-    └── cli/                      # social:install, social:doctor, the artisan provider
+    └── cli/                      # social:install, social:doctor, the dowel provider
 assets/stubs/install/             # social_auth_config, auth.html, social_auth_starter_service_provider (the magic_starter bridge)
 install.yaml                      # Manifest: registers SocialAuthServiceProvider; the flag-driven ops are staged by SocialInstallCommand
 ```

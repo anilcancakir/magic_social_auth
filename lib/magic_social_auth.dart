@@ -33,4 +33,4 @@ export 'src/ui/social_auth_buttons.dart';
 export 'src/ui/social_provider_icons.dart';
 
 // CLI
-export 'src/cli/social_auth_artisan_provider.dart';
+export 'src/cli/social_auth_dowel_provider.dart';

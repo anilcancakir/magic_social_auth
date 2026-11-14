@@ -19,7 +19,7 @@ The `social_auth` config decides which providers are on, which Google client ids
 This is what `social:install --providers=google,apple,github,microsoft --google-ios-client-id=123-abc.apps.googleusercontent.com --google-server-client-id=123-def.apps.googleusercontent.com --ios-scheme=myapp --android-callback=https://auth.example.com/auth/social` writes:
 
 ```dart
-// What `dart run <app>:artisan social:doctor` checks, and the values it prints
+// What `dart run magic:dowel social:doctor` checks, and the values it prints
 // for the backend: the callbacks below must equal the backend's
 // MAGIC_STARTER_SOCIAL_IOS_REDIRECT and MAGIC_STARTER_SOCIAL_ANDROID_REDIRECT.
 Map<String, dynamic> get socialAuthConfig => {

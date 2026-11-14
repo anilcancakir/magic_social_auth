@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fluttersdk_artisan/artisan.dart';
+import 'package:dowel/dowel.dart';
 import 'package:magic_social_auth/cli.dart';
 import 'package:magic_social_auth/src/cli/commands/social_doctor_command.dart';
 
@@ -19,9 +19,8 @@ class _TestableSocialDoctorCommand extends SocialDoctorCommand {
 
 Future<({int exitCode, String output})> _runDoctor(Directory root) async {
   final BufferedOutput output = BufferedOutput();
-  final int exitCode = await _TestableSocialDoctorCommand(
-    root.path,
-  ).handle(ArtisanContext.bare(MapInput(const <String, dynamic>{}), output));
+  final int exitCode = await _TestableSocialDoctorCommand(root.path)
+      .handle(DowelContext.bare(MapInput(const <String, dynamic>{}), output));
 
   return (exitCode: exitCode, output: output.content);
 }
@@ -62,9 +61,9 @@ void main() {
       expect(SocialDoctorCommand().name, 'social:doctor');
     });
 
-    test('the artisan provider contributes install and doctor', () {
+    test('the dowel provider contributes install and doctor', () {
       expect(
-        MagicSocialAuthArtisanProvider().commands().map((c) => c.name),
+        MagicSocialAuthDowelProvider().commands().map((c) => c.name),
         containsAll(<String>['social:install', 'social:doctor']),
       );
     });

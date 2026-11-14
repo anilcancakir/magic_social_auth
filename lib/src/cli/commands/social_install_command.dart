@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:fluttersdk_artisan/artisan.dart';
+import 'package:dowel/dowel.dart';
 
 /// Installs magic_social_auth into a Magic Flutter project.
 ///
@@ -15,15 +15,15 @@ import 'package:fluttersdk_artisan/artisan.dart';
 ///
 /// Usage:
 /// ```bash
-/// dart run artisan social:install \
+/// dart run magic:dowel social:install \
 ///   --providers=google,apple,github,microsoft \
 ///   --google-ios-client-id=123-abc.apps.googleusercontent.com \
 ///   --google-server-client-id=123-def.apps.googleusercontent.com \
 ///   --ios-scheme=myapp \
 ///   --android-callback=https://auth.example.com/auth/social
-/// dart run artisan social:install --dry-run
+/// dart run magic:dowel social:install --dry-run
 /// ```
-class SocialInstallCommand extends ArtisanInstallCommand {
+class SocialInstallCommand extends DowelInstallCommand {
   /// The providers the package resolves, in the order the config lists them.
   static const List<String> providerNames = <String>[
     'google',
@@ -106,7 +106,7 @@ class SocialInstallCommand extends ArtisanInstallCommand {
       'Install magic_social_auth: config, providers, native iOS/Android/web files and the magic_starter bridge.';
 
   @override
-  String pluginName(ArtisanContext ctx) => 'magic_social_auth';
+  String pluginName(DowelContext ctx) => 'magic_social_auth';
 
   /// Resolves the absolute path to the bundled install.yaml manifest.
   ///
@@ -133,7 +133,7 @@ class SocialInstallCommand extends ArtisanInstallCommand {
   }
 
   @override
-  Future<int> handle(ArtisanContext ctx) async {
+  Future<int> handle(DowelContext ctx) async {
     // 1. Locate the install.yaml bundled with this package.
     final manifestPath = await resolveManifestPath();
     if (manifestPath == null) {
@@ -203,10 +203,10 @@ class SocialInstallCommand extends ArtisanInstallCommand {
   /// Maps a [TransactionResult] to an exit code and emits the appropriate
   /// output line.
   ///
-  /// @param ctx     The active [ArtisanContext] for output.
+  /// @param ctx     The active [DowelContext] for output.
   /// @param result  The [TransactionResult] from [PluginInstaller.commit].
   /// @return 0 on [Success] or [DryRun]; 1 on [Conflict] or [Error].
-  int _renderResult(ArtisanContext ctx, TransactionResult result) {
+  int _renderResult(DowelContext ctx, TransactionResult result) {
     return switch (result) {
       Success(:final opCount) => () {
         ctx.output.success(
@@ -248,7 +248,7 @@ class _InstallOptions {
   /// Reads and validates the flags of [input].
   ///
   /// Throws a [FormatException] naming the first flag that is not usable.
-  factory _InstallOptions.read(ArtisanInput input) {
+  factory _InstallOptions.read(DowelInput input) {
     String? flag(String name) {
       final Object? value = input.option(name);
 

@@ -1,4 +1,5 @@
 import 'dart:io' show Platform;
+
 import 'social_platform.dart';
 
 /// IO implementation for native platforms (iOS, Android, macOS, Windows, Linux).
