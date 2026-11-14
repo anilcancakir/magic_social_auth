@@ -1,11 +1,12 @@
 # Configuration
 
-The `social_auth` config decides which providers are on, which Google client ids the native SDK uses, and where the browser flow returns to on each platform.
+The `social_auth` config decides which providers are on, which Google client ids the native SDK uses, and where the browser flow returns to on each platform; `SocialAuthButtons` renders the enabled providers.
 
 - [Full Config Structure](#full-config-structure)
 - [Providers](#providers)
 - [Callbacks](#callbacks)
 - [UI Overrides](#ui-overrides)
+- [Button Widget](#button-widget)
 - [Keys Owned by Other Packages](#keys-owned-by-other-packages)
 - [Minimal Example](#minimal-example)
 - [Related Documentation](#related-documentation)
@@ -96,6 +97,37 @@ Read by `SocialAuthButtons` from each provider's entry. When omitted, the widget
 
 > [!TIP]
 > For a custom provider registered with `SocialAuth.manager.extend()`, call `SocialAuth.manager.registerProviderDefaults()` instead of per-config overrides, so the defaults are available regardless of config state.
+
+<a name="button-widget"></a>
+## Button Widget
+
+`SocialAuthButtons` renders one button per provider that is enabled and runs on this platform, in `order`, with Apple first on iOS. It renders nothing when no provider qualifies. It is built from Wind widgets, so it needs a `WindTheme` above it (`MagicApplication` provides one).
+
+```dart
+import 'package:flutter/widgets.dart';
+import 'package:magic_social_auth/magic_social_auth.dart';
+
+Widget buildButtons({
+  required String? signingInWith,
+  required void Function(String provider) onPressed,
+}) {
+  return SocialAuthButtons(
+    onPressed: onPressed,
+    loadingProvider: signingInWith,
+    mode: SocialAuthMode.signUp,
+    labelBuilder: (provider, mode) => 'Continue with $provider',
+  );
+}
+```
+
+| Parameter | Type | Default | Description |
+|:----------|:-----|:--------|:------------|
+| `onPressed` | `void Function(String provider)` | required | Called synchronously from the tap with the config name (`google`). Start `SocialAuth.driver(provider).signIn()` here with no `await` before it, or a web popup is blocked. |
+| `loadingProvider` | `String?` | `null` | The provider whose flow is running: its button shows a spinner and the others are disabled. An empty string disables every button without a spinner; `null` leaves them all enabled. |
+| `mode` | `SocialAuthMode` | `SocialAuthMode.signIn` | `signIn` or `signUp`. Picks the label translation, `auth.sign_in_with` or `auth.sign_up_with`. |
+| `labelBuilder` | `String Function(String provider, SocialAuthMode mode)?` | `null` | Builds each label instead of the translation lookup. `provider` is the display label (`Google`, or the config `label`), not the config name. |
+| `className` | `String?` | `flex flex-col items-stretch` | Wind classes of the column that holds the buttons. A value replaces the default. |
+| `buttonClassName` | `String?` | a full-width, bordered card | Wind classes of every button. A value replaces the default, including the dimmed look of a disabled button, so repeat the classes you still want. |
 
 <a name="keys-owned-by-other-packages"></a>
 ## Keys Owned by Other Packages

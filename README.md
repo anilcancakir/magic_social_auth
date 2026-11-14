@@ -50,7 +50,7 @@ dart run magic:dowel social:install \
 dart run magic:dowel social:doctor
 ```
 
-`plugin:install` registers the dowel commands. `social:install` registers `SocialAuthServiceProvider` in `lib/config/app.dart`, writes `lib/config/social_auth.dart` and adds it to `Magic.init`'s `configFactories`, then makes the native edits for the providers you enable: the Google keys and URL scheme in `Info.plist`, the Sign in with Apple entitlement, the Android callback activity and `web/auth.html`. When the app lists `magic_starter` it also publishes the bridge that feeds the starter's screens. Every flag is optional, `--dry-run` previews, and a file that changed since the last install is reported as a conflict until you pass `--force`.
+`plugin:install` registers the dowel commands and adds `SocialAuthServiceProvider` to `lib/config/app.dart`. `social:install` stages that registration as well, writes `lib/config/social_auth.dart` and adds it to `Magic.init`'s `configFactories`, then makes the native edits for the providers you enable: the Google keys and URL scheme in `Info.plist`, the Sign in with Apple entitlement, the Android callback activity and `web/auth.html`. When the app lists `magic_starter` it also publishes the bridge that feeds the starter's screens. Every flag is optional, `--dry-run` previews, and a file that changed since the last install is reported as a conflict until you pass `--force`.
 
 `social:doctor` checks the result and prints the `MAGIC_STARTER_SOCIAL_*` lines the backend `.env` needs, plus the callback URL each provider console has to list. It exits 1 while a check fails. It cannot prove that an Android App Link verifies or that a provider console lists the callback; those stay a device check.
 

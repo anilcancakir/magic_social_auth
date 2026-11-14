@@ -149,7 +149,15 @@ The Google SDK keeps its own session, so the next sign-in skips the account pick
 A session restored at boot has created no driver, so sign Google out by name on every transition to signed-out:
 
 ```dart
-await SocialAuth.driver('google').signOut();
+import 'package:magic_social_auth/magic_social_auth.dart';
+
+Future<void> signGoogleOut() async {
+  // supports() is false when Google is disabled; driver() would throw
+  // ProviderNotConfiguredException instead.
+  if (SocialAuth.supports('google')) {
+    await SocialAuth.driver('google').signOut();
+  }
+}
 ```
 
 The bridge `social:install` publishes does this for `magic_starter` apps, listening to `Auth.stateNotifier`. An app without `magic_starter` has to do it on its own sign-out (see [Installation](../getting-started/installation.md#without-magic_starter)).
@@ -197,7 +205,7 @@ Switch on `code`, never on `message`. The codes the backend sends:
 | Reading a refusal from `SocialAuthException.message` | The backend translates it. Switch on `code`. |
 | Calling `Auth.login` with `result.token` when `result.isTwoFactor` is `true` | `token` and `user` are `null` on a challenged sign-in. Finish the 2FA challenge with `twoFactorToken` first. |
 | Treating every `SocialAuthCancelledException` as the user backing out | A failed Android App Link verification and a misconfigured Google client report the same cancel. Offer a retry, and stay quiet only when `superseded` is `true`. |
-| Relying on `SocialAuth.signOut()` to sign Google out after the app restarted | It only reaches drivers cached in this process. Call `SocialAuth.driver('google').signOut()` on every transition to signed-out. |
+| Relying on `SocialAuth.signOut()` to sign Google out after the app restarted | It only reaches drivers cached in this process. Sign Google out by name, behind `SocialAuth.supports('google')`, on every transition to signed-out. |
 | Looking for a disconnect method on a driver | There is none. Unlinking is the backend's `DELETE user/social-accounts/{provider}`, which `magic_starter`'s screens call. |
 | Starting a second mobile flow while one is open | It throws `SocialAuthCancelledException(superseded: true)`. Pass `SocialAuthButtons.loadingProvider` while a flow runs: it disables the other buttons. |
 
@@ -205,7 +213,7 @@ Switch on `code`, never on `message`. The codes the backend sends:
 ## Related Documentation
 
 - [Drivers](./drivers.md): the driver contract and the platform matrix.
-- [Configuration](../getting-started/configuration.md): the callback keys the browser flow returns to.
+- [Configuration](../getting-started/configuration.md): the callback keys the browser flow returns to and the `SocialAuthButtons` parameters.
 - [Installation](../getting-started/installation.md): `social:install`, `social:doctor` and the backend values.
 - [Architecture overview](../architecture/overview.md): how the flow client fits with the drivers.
 - [Connected accounts in magic_starter](https://anilcancakir.com/magic/docs/starter/basics/connected-accounts): the screens that link and unlink providers.

@@ -5,6 +5,15 @@
 ### Changed
 
 - **The package page is `https://anilcancakir.com/magic/social_auth` and every documentation link sits under `https://anilcancakir.com/magic/docs/social_auth`.** The pub.dev page carries it from the next release. (`pubspec.yaml`, `README.md`, `llms.txt`, `doc/`)
+- **The pub.dev topic `socialite` becomes `social-login`.** `socialite` matched no other package, so it never led to a topic page. (`pubspec.yaml`)
+
+### Fixed
+
+- **The next steps printed after `plugin:install` and `social:install` no longer send you to a config file that does not exist yet.** Step 1 now says to write `lib/config/social_auth.dart` with the flags of `social:install`. (`install.yaml`)
+- **The README and the installation page say what `plugin:install` does.** It registers the dowel commands and adds `SocialAuthServiceProvider` to `lib/config/app.dart`. (`README.md`, `doc/getting-started/installation.md`)
+- **The configuration page documents the `SocialAuthButtons` parameters.** `onPressed`, `loadingProvider`, `mode`, `labelBuilder`, `className` and `buttonClassName` now have a reference table. (`doc/getting-started/configuration.md`)
+- **The Google sign-out sample checks `SocialAuth.supports('google')` first.** Without the guard `SocialAuth.driver('google')` throws `ProviderNotConfiguredException` when Google is disabled. (`doc/basics/flows.md`, `llms.txt`)
+- **The agent skill listing is shorter.** (`skills/magic-social-auth/SKILL.md`)
 
 ## [1.0.1] - 2026-11-15
 
