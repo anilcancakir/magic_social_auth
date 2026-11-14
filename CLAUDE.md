@@ -4,7 +4,7 @@
 
 Social sign-in for the Magic Framework, the client of `magic-starter-laravel`'s social login: native Google and Apple sheets, a backend-hosted browser flow with PKCE for the rest, a Socialite-style `SocialAuth` facade with extensible drivers, and the `social:install` and `social:doctor` commands. A driver answers a `SocialAuthResult`; the package never logs the app in.
 
-**Version:** 1.0.0 · **Dart:** ^3.13.0 · **Flutter:** >=3.47.0 · **Requires:** `magic` ^1.0.0, `dowel` ^1.0.0
+**Version:** 1.0.1 · **Dart:** ^3.13.0 · **Flutter:** >=3.47.0 · **Requires:** `magic` ^1.0.0, `dowel` ^1.0.0
 
 ## Commands
 

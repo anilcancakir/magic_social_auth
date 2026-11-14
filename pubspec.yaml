@@ -10,7 +10,7 @@ topics:
   - social-auth
   - oauth
   - magic-framework
-  - socialite
+  - social-login
 
 environment:
   sdk: ^3.13.0

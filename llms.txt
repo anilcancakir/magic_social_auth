@@ -18,7 +18,7 @@ import 'package:magic/magic.dart';
 import 'package:magic_social_auth/magic_social_auth.dart';
 
 Future<void> signInWith(String provider) async {
-  // SocialAuthServiceProvider is registered in lib/config/app.dart by social:install.
+  // SocialAuthServiceProvider is registered in lib/config/app.dart by plugin:install and by social:install.
   try {
     final SocialAuthResult result = await SocialAuth.driver(provider).signIn();
 
@@ -74,14 +74,14 @@ Future<void> signInWith(String provider) async {
 - Build a `proof` per call; every connect mints a new PKCE pair, link ticket and proof. A second browser flow on mobile while one is open throws `SocialAuthCancelledException(superseded: true)`.
 - A custom driver sends no nonce for Google, and for Apple sends `Nonce.hashed` to Apple and `Nonce.raw` to the backend.
 - There is no disconnect method: unlinking is the backend's `DELETE user/social-accounts/{provider}`.
-- Without the `magic_starter` bridge, sign Google out by name (`SocialAuth.driver('google').signOut()`) on every transition to signed-out; `SocialAuth.signOut()` reaches only cached drivers.
+- Without the `magic_starter` bridge, sign Google out by name (`SocialAuth.driver('google').signOut()`, behind `SocialAuth.supports('google')`) on every transition to signed-out; `SocialAuth.signOut()` reaches only cached drivers.
 - Client secrets and the Apple key belong to the backend's environment, never the app.
 - In tests, fake the platform through the `@visibleForTesting` seams (`GoogleDriver.nativeSignIn`, `AppleDriver.requestCredential`, `SocialFlow.authenticate`), not a method channel.
 
 ## Docs
 
 - [Installation](https://anilcancakir.com/magic/docs/social_auth/getting-started/installation.md): social sign-in for Flutter apps built on the Magic Framework, against the `magic-starter-laravel` backend, with the `social:install` flags, `social:doctor`, the backend environment, provider consoles and platform notes.
-- [Configuration](https://anilcancakir.com/magic/docs/social_auth/getting-started/configuration.md): the `social_auth` config decides which providers are on, which Google client ids the native SDK uses, and where the browser flow returns to on each platform.
+- [Configuration](https://anilcancakir.com/magic/docs/social_auth/getting-started/configuration.md): the `social_auth` config decides which providers are on, which Google client ids the native SDK uses, and where the browser flow returns to on each platform; `SocialAuthButtons` renders the enabled providers.
 - [Drivers](https://anilcancakir.com/magic/docs/social_auth/basics/drivers.md): a driver runs one provider's flow and answers what the backend concluded, as a `SocialAuthResult`; the contract, built-in drivers, platform matrix and custom drivers.
 - [Flows](https://anilcancakir.com/magic/docs/social_auth/basics/flows.md): every provider ends at a Sanctum token or a two-factor challenge handed to the caller; the native token flow, browser flow, connect, confirm, account deletion, errors and guarantees.
 - [Architecture overview](https://anilcancakir.com/magic/docs/social_auth/architecture/overview.md): the client half of `magic-starter-laravel`'s social login, with the manager, drivers, flow client and the `magic_starter` bridge.

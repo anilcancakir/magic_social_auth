@@ -378,6 +378,25 @@ void main() {
         },
       );
 
+      test('the next-steps message points at social:install, not at a config '
+          'file that does not exist yet', () async {
+        seedSocialProject(tempDir);
+
+        final run = await runInstall(tempDir, fullInstallFlags);
+
+        expect(run.exitCode, 0, reason: run.output);
+        expect(
+          run.output,
+          isNot(contains('Fill in lib/config/social_auth.dart')),
+        );
+        expect(
+          run.output,
+          contains(
+            '1. Write lib/config/social_auth.dart with the flags of social:install',
+          ),
+        );
+      });
+
       test('writes every native, config and wiring edit', () async {
         seedSocialProject(tempDir);
 

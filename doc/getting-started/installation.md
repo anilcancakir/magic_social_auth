@@ -37,7 +37,7 @@ The backend side (routes, provider keys, the error codes) is documented in magic
 <a name="install-the-package"></a>
 ## Install the Package
 
-Add the package, then register its dowel commands (`social:install`, `social:doctor`):
+Add the package, then run `plugin:install`. It registers the dowel commands (`social:install`, `social:doctor`) and adds `SocialAuthServiceProvider` to the providers list in `lib/config/app.dart`:
 
 ```bash
 flutter pub add magic_social_auth
