@@ -1,56 +1,47 @@
 # Drivers
 
-A driver runs one provider's flow and answers what the backend concluded. It never logs the app in itself: it returns a `SocialAuthResult`, and the caller decides what a session, a 2FA challenge or a cancelled deletion means (see [Flows](flows.md)). `SocialAuthManager` resolves drivers by name and caches them for the lifetime of the app.
-
-## Table of Contents
+A driver runs one provider's flow and answers what the backend concluded: it never logs the app in itself, it returns a `SocialAuthResult`.
 
 - [SocialDriver Contract](#socialdriver-contract)
 - [SocialAuthResult](#socialauthresult)
 - [Built-in Drivers](#built-in-drivers)
 - [Platform Support Matrix](#platform-support-matrix)
 - [Registering a Custom Driver](#registering-a-custom-driver)
+- [Gotchas](#gotchas)
+- [Related Documentation](#related-documentation)
 
----
+<a name="socialdriver-contract"></a>
+## SocialDriver Contract
 
-## <a name="socialdriver-contract"></a>SocialDriver Contract
+`SocialAuthManager` resolves drivers by name and caches them for the lifetime of the app. The caller decides what a session, a 2FA challenge or a cancelled deletion means (see [Flows](./flows.md)).
 
 ```dart
-abstract class SocialDriver {
-  SocialDriver(this.config, {SocialPlatform? platform});
+import 'package:magic_social_auth/magic_social_auth.dart';
 
-  final Map<String, dynamic> config;   // social_auth.providers.<name>
-  final SocialPlatform platform;
+Future<void> useDriver(String currentPassword) async {
+  final SocialDriver driver = SocialAuth.driver('github');
 
-  /// The provider name the backend routes on ('google', 'github', ...).
-  String get name;
+  // Sign in
+  final SocialAuthResult result = await driver.signIn();
 
-  Set<SocialPlatform> get supportedPlatforms;
-  bool supportsPlatform([SocialPlatform? platform]);
+  // Connect (mobile)
+  await driver.connect({'password': currentPassword});
 
-  /// Signs in, or registers, with the provider.
-  Future<SocialAuthResult> signIn();
-
-  /// Prepares a connect and returns the call that opens the provider.
-  Future<Future<SocialAuthResult> Function()> beginConnect(
-    Map<String, String>? proof,
-  );
-
-  /// Links the provider to the signed-in account in one go.
-  Future<SocialAuthResult> connect(Map<String, String>? proof);
-
-  /// Re-authenticates with a linked provider for a step-up proof.
-  Future<SocialAuthResult> confirm();
-
-  /// Ends the provider SDK's own session, if it keeps one. Default is a no-op.
-  Future<void> signOut();
+  // Connect (web): prepare, then open from a second tap
+  final Future<SocialAuthResult> Function() open = await driver.beginConnect({
+    'password': currentPassword,
+  });
+  // ...in the next tap handler:
+  final SocialAuthResult linked = await open();
 }
 ```
 
 | Method | Backend intent | Answer carries |
-|---|---|---|
+|:-------|:---------------|:---------------|
 | `signIn()` | `signin` | `token` and `user`, or `isTwoFactor` and `twoFactorToken`; `deletionCancelled` when the sign-in cancelled a scheduled deletion. |
 | `beginConnect(proof)` / `connect(proof)` | `connect` | `connectedProvider`. Needs the caller's bearer token. |
 | `confirm()` | `confirm` | `confirmationToken`, a single-use step-up proof. Needs the caller's bearer token. |
+| `signOut()` | none | Ends the provider SDK's own session; a no-op by default. |
 
 `proof` is the step-up field the account can give: `{'password': ...}`, `{'code': ...}` or `{'confirmation_token': ...}`; `null` for a guest, who sends none. It is minted for this one call; never cache or reuse it.
 
@@ -58,27 +49,11 @@ abstract class SocialDriver {
 
 On the web a `signIn()` opens the popup in the same synchronous run as the call, so call it straight from the tap handler with no `await` before it.
 
-```dart
-final SocialDriver driver = SocialAuth.driver('github');
-
-// Sign in
-final SocialAuthResult result = await driver.signIn();
-
-// Connect (mobile)
-await driver.connect({'password': currentPassword});
-
-// Connect (web): prepare, then open from a second tap
-final Future<SocialAuthResult> Function() open = await driver.beginConnect(proof);
-// ...in the next tap handler:
-final SocialAuthResult linked = await open();
-```
-
----
-
-## <a name="socialauthresult"></a>SocialAuthResult
+<a name="socialauthresult"></a>
+## SocialAuthResult
 
 | Field | Type | Set by |
-|---|---|---|
+|:------|:-----|:-------|
 | `token` | `String?` | A completed sign-in: the Sanctum token. |
 | `user` | `Map<String, dynamic>?` | A completed sign-in: the user resource. |
 | `isTwoFactor` | `bool` | A sign-in on an account with confirmed 2FA. |
@@ -87,37 +62,35 @@ final SocialAuthResult linked = await open();
 | `connectedProvider` | `String?` | A connect. |
 | `confirmationToken` | `String?` | A confirm. |
 
-`AppleSignInResult` extends it with `givenName` and `familyName`: Apple shares the name on the first authorization only and never puts it in the ID token, so pass it on to a profile update or it is lost.
+`AppleSignInResult` extends it with `givenName` and `familyName`: Apple shares the name on the first authorisation only and never puts it in the ID token, so pass it on to a profile update or it is lost.
 
----
-
-## <a name="built-in-drivers"></a>Built-in Drivers
+<a name="built-in-drivers"></a>
+## Built-in Drivers
 
 The manager picks the driver that runs on the current platform. `SocialAuth.driver('google')` is a `GoogleDriver` on iOS and Android and a `RedirectDriver` on the web.
 
 ### GoogleDriver
 
-Native Google SDK (`google_sign_in ^7.2.0`) on iOS and Android. The SDK's ID token is posted to `auth/social/google/token`, which verifies it. No nonce goes with it: the backend prohibits one for Google.
+The native Google SDK (`google_sign_in`) on iOS and Android. The SDK's ID token is posted to `auth/social/google/token`, which verifies it. No nonce goes with it: the backend prohibits one for Google.
 
-- Config: `ios_client_id` (iOS only) and `server_client_id` (the ID token's audience). See [Configuration](../getting-started/configuration.md#google).
+- Config: `ios_client_id` (iOS only) and `server_client_id` (the ID token's audience). See [Configuration](../getting-started/configuration.md#providers).
 - The SDK accepts one `initialize` per process, so every instance shares the first one.
 - `signOut()` signs the SDK out so the next sign-in offers the account picker again.
-- A canceled sheet throws `SocialAuthCancelledException`. Android also reports a misconfigured client (SHA-1, package name, `server_client_id`) as canceled.
+- A cancelled sheet throws `SocialAuthCancelledException`. Android also reports a misconfigured client (SHA-1, package name, `server_client_id`) as cancelled.
 
 ### AppleDriver
 
-Sign in with Apple through the native sheet on iOS (`sign_in_with_apple ^8.2.0`). Every sheet gets a fresh `Nonce`: Apple receives its lowercase sha256 hex and seals it into the ID token, the backend receives the raw value and checks the two match, so a token lifted from another sign-in is refused. The authorization code goes along for the refresh token that account deletion revokes. The result is an `AppleSignInResult`.
+Sign in with Apple through the native sheet on iOS (`sign_in_with_apple`). Every sheet gets a fresh `Nonce`: Apple receives its lowercase sha256 hex and seals it into the ID token, the backend receives the raw value and checks the two match, so a token lifted from another sign-in is refused. The authorisation code goes along for the refresh token that account deletion revokes. The result is an `AppleSignInResult`.
 
 ### RedirectDriver
 
-Any provider through the backend's browser flow: GitHub and Microsoft everywhere, Apple on Android and the web, Google on the web. The app mints a PKCE pair, opens `<base_url>/auth/social/{provider}/redirect`, receives a one-time code on the callback and trades it with the verifier at `auth/social/exchange`. See [Flows](flows.md#browser-flow).
+Any provider through the backend's browser flow: GitHub and Microsoft everywhere, Apple on Android and the web, Google on the web. The app mints a PKCE pair, opens `<base_url>/auth/social/{provider}/redirect`, receives a one-time code on the callback and trades it with the verifier at `auth/social/exchange`. See [Flows](./flows.md#browser-flow).
 
----
-
-## <a name="platform-support-matrix"></a>Platform Support Matrix
+<a name="platform-support-matrix"></a>
+## Platform Support Matrix
 
 | Provider | iOS | Android | Web |
-|---|---|---|---|
+|:---------|:----|:--------|:----|
 | Google | native SDK | native SDK | browser flow (popup) |
 | Apple | native sheet | browser flow | browser flow (popup) |
 | GitHub | browser flow | browser flow | browser flow (popup) |
@@ -125,13 +98,14 @@ Any provider through the backend's browser flow: GitHub and Microsoft everywhere
 
 macOS, Windows and Linux are not supported: `SocialAuth.supports(name)` answers `false` there, and `SocialAuthButtons` omits the provider.
 
----
-
-## <a name="registering-a-custom-driver"></a>Registering a Custom Driver
+<a name="registering-a-custom-driver"></a>
+## Registering a Custom Driver
 
 The backend serves Google, Apple, GitHub and Microsoft. A custom driver is for a provider your own backend adds, or for a different way of running one of these. Extend `SocialDriver`, or reuse `RedirectDriver` for a provider the backend hosts a browser flow for:
 
 ```dart
+import 'package:magic_social_auth/magic_social_auth.dart';
+
 SocialAuth.manager.extend(
   'gitlab',
   (config) => RedirectDriver('gitlab', config),
@@ -149,11 +123,22 @@ SocialAuth.manager.registerProviderDefaults(
 
 Call `extend()` before the first `SocialAuth.driver('gitlab')`. It clears a cached instance of that name, so re-registering is safe. A custom driver is resolved after the `enabled` check, so `social_auth.providers.gitlab.enabled: false` still disables it.
 
----
+<a name="gotchas"></a>
+## Gotchas
 
-**Related**
+| Mistake | Fix |
+|:--------|:----|
+| An `await` before `signIn()` on the web | The popup opens in the same synchronous run as the call, so call it straight from the tap handler. For a connect on the web, run `beginConnect` first and the returned opener from the next tap. |
+| Caching a `proof` map or a link ticket across attempts | Build the `proof` per call. Every connect mints a new PKCE pair, a new link ticket and a new proof. |
+| `SocialAuth.driver(name)` for a provider with `enabled: false` | It throws `ProviderNotConfiguredException`; an unknown name throws `ArgumentError`. Ask `SocialAuth.supports(name)` first, which answers `false` for both. |
+| A custom provider that never appears in `SocialAuthButtons` | The widget walks `social_auth.providers`, so the provider needs its own entry there as well as `extend()`. |
+| Sending a nonce for Google, or the raw nonce to Apple, from a custom driver on `SocialFlow.token` | Google takes none. Apple gets `Nonce.hashed` and the backend gets `Nonce.raw`. |
+| Dropping `AppleSignInResult.givenName` and `familyName` | Apple shares the name on the first authorisation only; hand it to a profile update straight away. |
 
-- [Installation](../getting-started/installation.md)
-- [Configuration](../getting-started/configuration.md)
-- [Flows](flows.md)
-- [Architecture overview](../architecture/overview.md)
+<a name="related-documentation"></a>
+## Related Documentation
+
+- [Flows](./flows.md): the browser flow, the native token flow, errors and guarantees.
+- [Configuration](../getting-started/configuration.md): the keys each driver reads.
+- [Installation](../getting-started/installation.md): `social:install` and `social:doctor`.
+- [Architecture overview](../architecture/overview.md): how the manager, drivers and flow client fit together.
