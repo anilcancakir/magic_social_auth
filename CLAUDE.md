@@ -45,7 +45,7 @@ tool/check-docs.py               # Offline docs gate, run by docs-link-check.yml
 
 ## Post-Change Checklist
 
-After ANY source code change, sync **before committing**. A change is not done while one of these is stale:
+After any source code change, sync **before committing**. A change is not done while one of these is stale:
 
 1. **`CHANGELOG.md`**: Add entry under `[Unreleased]` section
 2. **`README.md`, `llms.txt` and the `doc/` pages**: Update if features, API, or usage changes
@@ -80,7 +80,7 @@ Every feature, fix, or refactor goes through red-green-refactor: write a failing
 | `SocialAuth.signOut()` after a restored session | It reaches only cached drivers; sign Google out by name on every signed-out transition (the bridge does) |
 | Reading a backend refusal by message | Switch on `SocialAuthException.code` |
 | Adding a member to magic_starter's `MagicStarterSocialAuth` contract without touching this package | Edit `_contractMembers` in `test/cli/commands/social_install_command_test.dart` and the bridge stub together |
-| Relative paths in `pubspec_overrides.yaml` | Use ABSOLUTE ones; the file is never committed |
+| Relative paths in `pubspec_overrides.yaml` | Use absolute ones; the file is never committed |
 
 ## Release
 
