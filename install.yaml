@@ -28,8 +28,9 @@ post_install:
 
     1. Write lib/config/social_auth.dart with the flags of social:install
        (--google-ios-client-id, --google-server-client-id, --ios-scheme and
-       --android-callback). Run it again whenever a value is still empty; a
-       file you edited by hand needs --force.
+       --android-callback). The file is written from the flags of that one
+       run, and an omitted flag becomes an empty value, so give every flag
+       each time; a file you edited by hand needs --force.
 
     2. Check the native setup and print the values the backend needs:
 
