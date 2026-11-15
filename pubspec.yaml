@@ -1,6 +1,6 @@
 name: magic_social_auth
 description: "Social sign-in for Magic apps: native Google and Apple sheets, a PKCE browser flow for GitHub and Microsoft, and your backend decides the outcome."
-version: 1.0.1
+version: 1.0.2
 homepage: https://anilcancakir.com/magic/social_auth
 repository: https://github.com/anilcancakir/magic_social_auth
 issue_tracker: https://github.com/anilcancakir/magic_social_auth/issues
