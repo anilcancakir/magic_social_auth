@@ -2,9 +2,11 @@
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-11-15
+
 ### Changed
 
-- **The package page is `https://anilcancakir.com/magic/social_auth` and every documentation link sits under `https://anilcancakir.com/magic/docs/social_auth`.** The pub.dev page carries it from the next release. (`pubspec.yaml`, `README.md`, `llms.txt`, `doc/`)
+- **The package page is `https://anilcancakir.com/magic/social_auth` and every documentation link sits under `https://anilcancakir.com/magic/docs/social_auth`.** (`pubspec.yaml`, `README.md`, `llms.txt`, `doc/`)
 - **The pub.dev topic `socialite` becomes `social-login`.** `socialite` matched no other package, so it never led to a topic page. (`pubspec.yaml`)
 
 ### Fixed
