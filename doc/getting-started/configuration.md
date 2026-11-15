@@ -92,7 +92,7 @@ Read by `SocialAuthButtons` from each provider's entry. When omitted, the widget
 |:----|:-----|:------------|
 | `label` | `String` | Name shown on the button (`Google` becomes `Sign in with Google` through `auth.sign_in_with`). |
 | `icon_svg` | `String` | Raw SVG string for the icon. Overrides the built-in one. |
-| `icon_class` | `String` | Class applied to the icon element. Defaults to `w-5 h-5`; a value you set replaces that default instead of adding to it, so repeat the size classes you still want. |
+| `icon_class` | `String` | Class applied to the icon element. Google and Microsoft default to `w-5 h-5`; GitHub and Apple default to `fill-slate-900 dark:fill-white`, a fill with no size. A value you set replaces the default instead of adding to it, so repeat the classes you still want. |
 | `order` | `int` | Rendering order, lower first. Built-in order is Google 1, Microsoft 2, GitHub 3, Apple 4. On iOS Apple is always first, as Apple's review guidelines expect. |
 
 > [!TIP]

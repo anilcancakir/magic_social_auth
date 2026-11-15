@@ -9,6 +9,7 @@
 
 ### Fixed
 
+- **The `icon_class` default is stated per provider.** Google and Microsoft default to `w-5 h-5`; GitHub and Apple default to `fill-slate-900 dark:fill-white`, which sets a fill and no size. The page said every provider defaults to `w-5 h-5`. (`doc/getting-started/configuration.md`)
 - **The next steps printed after `plugin:install` and `social:install` no longer send you to a config file that does not exist yet.** Step 1 now says to write `lib/config/social_auth.dart` with the flags of `social:install`. (`install.yaml`)
 - **The README and the installation page say what `plugin:install` does.** It registers the dowel commands and adds `SocialAuthServiceProvider` to `lib/config/app.dart`. (`README.md`, `doc/getting-started/installation.md`)
 - **The configuration page documents the `SocialAuthButtons` parameters.** `onPressed`, `loadingProvider`, `mode`, `labelBuilder`, `className` and `buttonClassName` now have a reference table. (`doc/getting-started/configuration.md`)
