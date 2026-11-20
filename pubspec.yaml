@@ -12,10 +12,6 @@ topics:
   - magic-framework
   - social-login
 
-screenshots:
-  - description: "The Magic Social Auth logo."
-    path: screenshots/logo.png
-
 environment:
   sdk: ^3.13.0
   flutter: ">=3.47.0"
