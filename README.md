@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/anilcancakir/magic_social_auth/master/.github/magic-logo.svg" width="120" alt="Magic Social Auth Logo" />
+  <img src="https://raw.githubusercontent.com/anilcancakir/magic_social_auth/master/.github/logo.png" width="120" alt="Magic Social Auth logo" />
 </p>
 
 <h1 align="center">Magic Social Auth</h1>
