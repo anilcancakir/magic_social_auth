@@ -96,7 +96,7 @@ Any provider through the backend's browser flow: GitHub and Microsoft everywhere
 | GitHub | browser flow | browser flow | browser flow (popup) |
 | Microsoft | browser flow | browser flow | browser flow (popup) |
 
-macOS, Windows and Linux are not supported: `SocialAuth.supports(name)` answers `false` there, and `SocialAuthButtons` omits the provider.
+tvOS, macOS, Windows and Linux are not supported: `SocialAuth.supports(name)` answers `false` there, and `SocialAuthButtons` omits the provider.
 
 <a name="registering-a-custom-driver"></a>
 ## Registering a Custom Driver

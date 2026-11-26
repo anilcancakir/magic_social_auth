@@ -192,9 +192,9 @@ Client secrets and Apple's key live in the backend's environment, never in the F
 - Serve `auth.html` without a `Cross-Origin-Opener-Policy` header. A same-origin one can sever the popup's link to the app (`window.opener`); `auth.html` then falls back to writing the result to `localStorage`, which `flutter_web_auth_2` polls.
 - A new click supersedes a popup that is still pending; only the newest flow spends its code.
 
-### macOS, Windows, Linux
+### tvOS, macOS, Windows, Linux
 
-Not supported. `SocialAuth.supports(name)` answers `false` and `SocialAuthButtons` renders nothing for the provider.
+Not supported. `SocialAuth.supports(name)` answers `false` and `SocialAuthButtons` renders nothing for the provider. flutter-tvos reports an Apple TV as iOS, so tvOS is told apart through `MagicPlatform.isTvOS` and no native Google or Apple SDK is reached there.
 
 <a name="without-magic_starter"></a>
 ## Without magic_starter

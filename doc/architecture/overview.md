@@ -52,7 +52,7 @@ SocialFlow ── Pkce · Nonce · WebFlowSlot
 magic Http facade ── auth interceptor attaches the bearer
 ```
 
-Which driver runs is decided in `SocialAuthManager`: Google is native off the web, Apple is native on iOS, everything else is a `RedirectDriver`. A driver whose `supportedPlatforms` lacks the current platform answers `false` from `SocialAuth.supports(name)`.
+Which driver runs is decided in `SocialAuthManager`: Google is native off the web and off tvOS, Apple is native on iOS, everything else is a `RedirectDriver`. On tvOS (`SocialPlatform.tvos`, detected through `MagicPlatform.isTvOS` because flutter-tvos reports iOS) every provider is a `RedirectDriver`, which the flow refuses. A driver whose `supportedPlatforms` lacks the current platform answers `false` from `SocialAuth.supports(name)`.
 
 <a name="data-flow"></a>
 ## Data Flow
