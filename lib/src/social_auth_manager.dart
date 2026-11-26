@@ -110,11 +110,13 @@ class SocialAuthManager {
     // Built-in drivers
     final SocialPlatform platform = this.platform;
 
+    // tvOS has no Google SDK half, so it takes the redirect driver, which
+    // SocialFlow refuses before any call.
     return switch (name) {
-      'google' when platform != SocialPlatform.web => GoogleDriver(
-        config,
-        platform: platform,
-      ),
+      'google'
+          when platform != SocialPlatform.web &&
+              platform != SocialPlatform.tvos =>
+        GoogleDriver(config, platform: platform),
       'apple' when platform == SocialPlatform.ios => AppleDriver(
         config,
         platform: platform,

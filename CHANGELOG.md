@@ -4,7 +4,7 @@
 
 ### Added
 
-- **`SocialPlatform.tvos`.** `SocialPlatformExtension.current` answers it on Apple TV, where the Dart VM reads iOS and the Google and Apple sign-in SDKs have no tvOS half. A browser flow started there throws `UnsupportedPlatformException` before any SDK or backend call, and no driver lists `tvos`, so `SocialAuthButtons` draws none. The answer comes from `MagicPlatform.isTvOS`; every other platform answers as before. (`lib/src/models/social_platform.dart`, `lib/src/models/social_platform_io.dart`, `lib/src/flow/social_flow.dart`)
+- **`SocialPlatform.tvos`.** `SocialPlatformExtension.current` answers it on Apple TV, where the Dart VM reads iOS and the Google and Apple sign-in SDKs have no tvOS half. A browser flow started there throws `UnsupportedPlatformException` before any SDK or backend call, and no driver lists `tvos`, so `SocialAuthButtons` draws none. `SocialAuthManager` builds the redirect driver for every provider there, never `GoogleDriver`, so Google never reaches its SDK. The answer comes from `MagicPlatform.isTvOS`; every other platform answers as before. (`lib/src/models/social_platform.dart`, `lib/src/models/social_platform_io.dart`, `lib/src/flow/social_flow.dart`, `lib/src/social_auth_manager.dart`)
 
 ### Changed
 

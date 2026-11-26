@@ -91,6 +91,14 @@ void main() {
       }
     });
 
+    test('no provider builds a native SDK driver on tvOS', () {
+      manager.platformOverride = SocialPlatform.tvos;
+
+      for (final String name in ['google', 'apple', 'github', 'microsoft']) {
+        expect(manager.driver(name), isA<RedirectDriver>());
+      }
+    });
+
     test('a disabled provider is refused', () {
       Config.set('social_auth.providers.github', {'enabled': false});
 
