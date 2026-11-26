@@ -3,8 +3,11 @@ import 'social_platform_stub.dart'
     if (dart.library.io) 'social_platform_io.dart'
     if (dart.library.html) 'social_platform_web.dart';
 
-/// Supported platforms for social authentication.
-enum SocialPlatform { ios, android, web, macos, windows, linux }
+/// Platforms social authentication tells apart.
+///
+/// [tvos] is named so a flow can refuse it: no sign-in SDK has a tvOS half,
+/// and the Dart VM answers iOS there.
+enum SocialPlatform { ios, android, web, macos, windows, linux, tvos }
 
 /// Extension methods for [SocialPlatform].
 extension SocialPlatformExtension on SocialPlatform {

@@ -299,6 +299,20 @@ void main() {
       expect(call.options.preferEphemeral, isFalse);
     });
 
+    test('tvOS refuses before the browser or the backend is reached', () async {
+      MagicPlatform.debugTvOSOverride = true;
+      addTearDown(() => MagicPlatform.debugTvOSOverride = null);
+      final _ScriptedFlow flow = _ScriptedFlow(null);
+
+      await expectLater(
+        flow.signIn('github'),
+        throwsA(isA<UnsupportedPlatformException>()),
+      );
+      expect(flow.platform, SocialPlatform.tvos);
+      expect(flow.calls, isEmpty);
+      expect(sent(), isEmpty);
+    });
+
     test('a missing callback for the platform fails loudly', () async {
       Config.set('social_auth.callback', <String, dynamic>{});
       final _ScriptedFlow flow = _ScriptedFlow(SocialPlatform.ios);
@@ -576,7 +590,7 @@ void main() {
 /// parsing and the exchange are the real ones. Each flow gets its own slot so
 /// one test's pending flow cannot supersede another's.
 class _ScriptedFlow extends SocialFlow {
-  _ScriptedFlow(SocialPlatform platform)
+  _ScriptedFlow(SocialPlatform? platform)
     : super(platform: platform, slot: WebFlowSlot());
 
   /// Every browser opening, in order.

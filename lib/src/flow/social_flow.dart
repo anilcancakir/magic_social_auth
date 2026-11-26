@@ -314,6 +314,7 @@ class SocialFlow {
       case SocialPlatform.macos:
       case SocialPlatform.windows:
       case SocialPlatform.linux:
+      case SocialPlatform.tvos:
         throw UnsupportedPlatformException(
           'Social sign-in runs on iOS, Android and web, not ${platform.name}.',
         );

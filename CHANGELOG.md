@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- **`SocialPlatform.tvos`.** `SocialPlatformExtension.current` answers it on Apple TV, where the Dart VM reads iOS and the Google and Apple sign-in SDKs have no tvOS half. A browser flow started there throws `UnsupportedPlatformException` before any SDK or backend call, and no driver lists `tvos`, so `SocialAuthButtons` draws none. The answer comes from `MagicPlatform.isTvOS`; every other platform answers as before. (`lib/src/models/social_platform.dart`, `lib/src/models/social_platform_io.dart`, `lib/src/flow/social_flow.dart`)
+
 ### Changed
 
 - **The README shows the plugin's own logo instead of the Magic logo.** `.github/logo.png`, a 512 pixel PNG of the mark the docs site serves, replaces `.github/magic-logo.svg`. (`README.md`, `.github/`)
