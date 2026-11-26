@@ -31,7 +31,7 @@
 | Install | `flutter pub add magic_social_auth`, then `dart run magic:dowel plugin:install magic_social_auth` and `dart run magic:dowel social:install` |
 | Import | `package:magic_social_auth/magic_social_auth.dart` |
 | Entry points | `SocialAuth` (facade), `SocialAuthManager`, `SocialDriver` with `GoogleDriver`, `AppleDriver` and `RedirectDriver`, `SocialAuthResult`, `SocialAuthButtons`, `SocialAuthServiceProvider`; `social:install` and `social:doctor` (CLI) |
-| Platforms | iOS, Android and web. macOS, Windows and Linux are not supported. |
+| Platforms | iOS, Android and web. tvOS, macOS, Windows and Linux are not supported. |
 | Requires | Dart >=3.13, Flutter >=3.47, `magic` ^1.0.0, and a `magic-starter-laravel` backend with the `social-login` feature on |
 | Dependencies | `magic`, `google_sign_in`, `sign_in_with_apple`, `flutter_web_auth_2`, `crypto`; dowel runs the CLI |
 | License | MIT |
@@ -107,7 +107,7 @@ Failure modes:
 | A flow needs `social_auth.callback.ios` or `.android` and it is empty | `SocialAuthException` that names the key. |
 | `enabled: false` for the provider | `SocialAuth.driver(name)` throws `ProviderNotConfiguredException`. |
 | A name that is neither built in nor registered | `ArgumentError`. `SocialAuth.supports(name)` answers `false` for both this and the previous row. |
-| macOS, Windows or Linux | `SocialAuth.supports(name)` is `false`; a browser-flow driver called anyway throws `UnsupportedPlatformException`. |
+| tvOS, macOS, Windows or Linux | `SocialAuth.supports(name)` is `false`; a browser-flow driver called anyway throws `UnsupportedPlatformException`. |
 | A second browser flow on mobile while one is open | `SocialAuthCancelledException(superseded: true)`. |
 
 ## Providers and platforms
